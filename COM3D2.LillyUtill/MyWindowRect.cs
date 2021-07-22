@@ -96,7 +96,7 @@ namespace COM3D2.LillyUtill
         public int winNum;
         public static int winCnt;
 
-        public MyWindowRect(ConfigFile config, string fileName, float wc = 200f, float wo = 300f, float hc = 32f, float ho = 600f, float x = 32f, float y = 32f, float windowSpace = 32f)
+        public MyWindowRect(ConfigFile config, string fileName, float wc = 100f, float wo = 300f, float hc = 32f, float ho = 600f, float x = 32f, float y = 32f, float windowSpace = 32f)
         {
             jsonPath = Path.GetDirectoryName(config.ConfigFilePath) + $@"\{fileName}-rect.json";
 
@@ -117,6 +117,7 @@ namespace COM3D2.LillyUtill
             actionScreen += ScreenChg;
 
             winNum = winCnt++;
+            load();
         }
 
         public void load()

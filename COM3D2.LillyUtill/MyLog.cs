@@ -8,14 +8,25 @@ namespace COM3D2.LillyUtill
 {
     public class MyLog
     {
-        static ManualLogSource log;// = BepInEx.Logging.Logger.CreateLogSource(MyAttribute.PLAGIN_NAME);
+        public ManualLogSource log;// = BepInEx.Logging.Logger.CreateLogSource(MyAttribute.PLAGIN_NAME);
 
-        public static void init(string name)
+        public MyLog(string name)
         {
-            log = BepInEx.Logging.Logger.CreateLogSource(name);
+            init( name);
         }
 
-        public static void LogLine()
+        public ManualLogSource GetLog()
+        {
+            return log;
+        }
+
+        public MyLog init(string name)
+        {
+            log = BepInEx.Logging.Logger.CreateLogSource(name);
+            return this;
+        }
+
+        public void LogLine()
         {
             Console.ForegroundColor = ConsoleColor.White;
             foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor)))
@@ -28,13 +39,12 @@ namespace COM3D2.LillyUtill
         }
 
 
-        public static void LogOut(object[] args, Action<string> action)
+        public void LogOut(object[] args, Action<string> action)
         {
-
             action(MyUtill.Join(" , ", args));
         }
 
-        public static void ConsoleOut(object[] args, ConsoleColor consoleColor)
+        public void ConsoleOut(object[] args, ConsoleColor consoleColor)
         {
 
             Console.BackgroundColor = consoleColor;
@@ -44,82 +54,81 @@ namespace COM3D2.LillyUtill
         }
 
 
-        public static void ConsoleOut(object[] args)
+        public void ConsoleOut(object[] args)
         {
 
             Console.WriteLine(MyUtill.Join(" , ", args));
             //Console.ResetColor();
         }
 
-        public static void LogDebug(params object[] args)
+        public void LogDebug(params object[] args)
         {
             LogOut(args, log.LogDebug);
             // ConsoleOut(args);
         }
 
-        public static void LogInfo(params object[] args)
+        public void LogInfo(params object[] args)
         {
             LogOut(args, log.LogInfo);
             //ConsoleOut(args, ConsoleColor.DarkGray);
         }
 
-        public static void LogMessage(params object[] args)
+        public void LogMessage(params object[] args)
         {
             LogOut(args, log.LogMessage);
             // ConsoleOut(args, ConsoleColor.DarkBlue);
         }
 
-        public static void LogDarkMagenta(params object[] args)
+        public void LogDarkMagenta(params object[] args)
         {
             ConsoleOut(args, ConsoleColor.DarkMagenta);
         }
-        public static void LogDarkYellow(params object[] args)
+        public void LogDarkYellow(params object[] args)
         {
             ConsoleOut(args, ConsoleColor.DarkYellow);
         }
 
-        public static void LogBlue(params object[] args)
+        public void LogBlue(params object[] args)
         {
             ConsoleOut(args, ConsoleColor.Blue);
         }
 
-        public static void LogDarkRed(params object[] args)
+        public void LogDarkRed(params object[] args)
         {
             ConsoleOut(args, ConsoleColor.DarkRed);
         }
 
-        public static void LogDarkBlue(params object[] args)
+        public void LogDarkBlue(params object[] args)
         {
             ConsoleOut(args, ConsoleColor.DarkBlue);
         }
 
-        public static void Log(ConsoleColor consoleColor, params object[] args)
+        public void Log(ConsoleColor consoleColor, params object[] args)
         {
             ConsoleOut(args, consoleColor);
         }
 
-        public static void Log(params object[] args)
+        public void Log(params object[] args)
         {
             ConsoleOut(args);
         }
 
-        public static void LogWarning(params object[] args)
+        public void LogWarning(params object[] args)
         {
             LogOut(args, log.LogWarning);
             //ConsoleOut(args, ConsoleColor.DarkYellow);
         }
 
-        public static void LogFatal(params object[] args)
+        public void LogFatal(params object[] args)
         {
             LogOut(args, log.LogFatal);
             //ConsoleOut(args, ConsoleColor.Red);
         }
 
-        public static void LogError(params object[] args)
+        public void LogError(params object[] args)
         {
             LogOut(args, log.LogError);
             //ConsoleOut(args, ConsoleColor.DarkRed);
         }
-
     }
 }
