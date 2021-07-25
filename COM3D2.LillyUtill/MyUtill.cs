@@ -68,5 +68,18 @@ namespace COM3D2.LillyUtill
 			}
 		}
 
+		public static T RandomEnum<T>(params T[] args)
+		{
+			//Array values = Enum.GetValues(typeof(T));
+			List<T> lst = ((T[])Enum.GetValues(typeof(T))).ToList();
+			for (int i = 0; i < args.Length; i++)
+			{
+				lst.Remove(args[i]);
+			}
+			return lst[UnityEngine.Random.Range(0, lst.Count)];
+			//return lst[new Random().Next(0, lst.Count)];
+			//return (T)values.GetValue(new Random().Next(0, values.Length));
+		}
+
 	}
 }

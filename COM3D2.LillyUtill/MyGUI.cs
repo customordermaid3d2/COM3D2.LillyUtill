@@ -91,7 +91,7 @@ namespace COM3D2.LillyUtill
 
                 // 이건 기어메뉴 아이콘
                 SystemShortcutAPI.AddButton(
-                    FullName
+                    FullName + " " + keyboardShortcut.ToString()
                     , new Action(delegate ()
                     { // 기어메뉴 아이콘 클릭시 작동할 기능
                         instance.isGUIOn = !instance.isGUIOn;
@@ -104,6 +104,45 @@ namespace COM3D2.LillyUtill
             return instance;
         }
 
+        public static T Install<T>(GameObject parent, ConfigFile config, string configFileName, string FullName, string ShortName, Bitmap icon, KeyboardShortcut keyboardShortcut) where T : MyGUI
+        {
+            var instance = parent.GetComponent<T>();
+            if (instance == null)
+            {
+                instance = parent.AddComponent<T>();
+                //calls Start() on the object and initializes it.
+                guiList.Add(instance);
+                //MyLog.LogMessage("MyGUI.Install");
+                instance.StartAfterSetup(config, configFileName, FullName, ShortName, keyboardShortcut);
+
+                // 이건 기어메뉴 아이콘
+                SystemShortcutAPI.AddButton(
+                    FullName +" "+ keyboardShortcut.ToString()
+                    , new Action(delegate ()
+                    { // 기어메뉴 아이콘 클릭시 작동할 기능
+                        instance.isGUIOn = !instance.isGUIOn;
+                    })
+                    , FullName // 표시될 툴팁 내용                               
+                , MyUtill.ExtractResource(icon));// 표시될 아이콘
+                // 아이콘은 이렇게 추가함
+
+            }
+            return instance;
+        }
+
+        public void StartAfterSetup(ConfigFile config, string configFileName, string FullName, string ShortName, KeyboardShortcut keyboardShortcut)
+        {
+            this.config = config;
+            this.windowName = FullName;
+            this.FullName = FullName;
+            this.ShortName = ShortName;
+            //this.keyboardShortcut = keyboardShortcut;
+            this.IsGUIOn = config.Bind("GUI", "isGUIOn", false); // 이건 베핀 설정값 지정용                                                                         
+            this.ShowCounter = config.Bind("GUI", "isGUIOnKey", keyboardShortcut);// 이건 단축키
+            this.myWindowRect = new MyWindowRect(config, configFileName, FullName, ShortName);
+            IsOpen = IsOpen;
+        }
+
         public void StartAfterSetup(ConfigFile config, string FullName, string ShortName, KeyboardShortcut keyboardShortcut)
         {
             this.config = config;
@@ -113,7 +152,8 @@ namespace COM3D2.LillyUtill
             //this.keyboardShortcut = keyboardShortcut;
             this.IsGUIOn = config.Bind("GUI", "isGUIOn", false); // 이건 베핀 설정값 지정용                                                                         
             this.ShowCounter = config.Bind("GUI", "isGUIOnKey", keyboardShortcut);// 이건 단축키
-            this.myWindowRect = new MyWindowRect(config, FullName);
+            this.myWindowRect = new MyWindowRect(config, FullName, FullName, ShortName);
+            IsOpen = IsOpen;
         }
 
         /// <summary>

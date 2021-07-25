@@ -26,6 +26,7 @@ namespace COM3D2.LillyUtill
             myLog = new MyLog(MyAttribute.PLAGIN_NAME);
             myLog.LogMessage("Awake");
             Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
+            PresetUtill.init();
         }
     }
 }

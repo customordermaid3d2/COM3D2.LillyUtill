@@ -35,12 +35,14 @@ namespace COM3D2.LillyUtill
                     windowRect.width = windowRectOpen.w;
                     windowRect.height = windowRectOpen.h;
                     windowRect.x -= windowRectOpen.w - windowRectClose.w;
+                    windowName = FullName;
                 }
                 else
                 {
                     windowRect.width = windowRectClose.w;
                     windowRect.height = windowRectClose.h;
                     windowRect.x += windowRectOpen.w - windowRectClose.w;
+                    windowName = ShortName;
                 }
             }
         }
@@ -96,7 +98,46 @@ namespace COM3D2.LillyUtill
         public int winNum;
         public static int winCnt;
 
-        public MyWindowRect(ConfigFile config, string fileName, float wc = 100f, float wo = 300f, float hc = 32f, float ho = 600f, float x = 32f, float y = 32f, float windowSpace = 32f)
+        public string windowName;
+        public string FullName;
+        public string ShortName;
+
+        public MyWindowRect(ConfigFile config,
+                            string fileName,
+                            float wc = 100f,
+                            float wo = 300f,
+                            float hc = 32f,
+                            float ho = 600f,
+                            float x = 32f,
+                            float y = 32f,
+                            float windowSpace = 32f)
+        {
+            cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
+        }
+
+        /// <summary>
+        /// myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME,"PEXL");
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="fileName"></param>
+        /// <param name="windowFullName"></param>
+        /// <param name="windowShortName"></param>
+        /// <param name="wc"></param>
+        /// <param name="wo"></param>
+        /// <param name="hc"></param>
+        /// <param name="ho"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="windowSpace"></param>
+        public MyWindowRect(ConfigFile config, string fileName, string windowFullName, string windowShortName, float wc = 100f, float wo = 300f, float hc = 32f, float ho = 600f, float x = 32f, float y = 32f, float windowSpace = 32f)
+        {
+            windowName = windowFullName;
+            FullName = windowFullName;
+            ShortName = windowShortName;
+            cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
+        }
+
+        private void cret(ConfigFile config, string fileName, float wc, float wo, float hc, float ho, float x, float y, float windowSpace)
         {
             jsonPath = Path.GetDirectoryName(config.ConfigFilePath) + $@"\{fileName}-rect.json";
 
