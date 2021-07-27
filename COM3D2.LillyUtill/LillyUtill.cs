@@ -10,7 +10,7 @@ namespace COM3D2.LillyUtill
     class MyAttribute
     {
         public const string PLAGIN_NAME = "Sample";
-        public const string PLAGIN_VERSION = "21.7.22";
+        public const string PLAGIN_VERSION = "21.7.25";
         public const string PLAGIN_FULL_NAME = "COM3D2.Sample.Plugin";
     }
 
