@@ -90,7 +90,7 @@ namespace COM3D2.LillyUtill
 
            // max =  (c / 3 + 1) * 3 ;
 
-            if (i2==0)
+            if (i2==3)
             {
                 max = c;
             }
@@ -113,12 +113,12 @@ namespace COM3D2.LillyUtill
                 //maids = new Maid[max];
                 //maidNames = new string[max];
                 if (maxb < max)
-                    for (int i = maxb; i < max; i++)
+                    for (int i = maxb-1; i < max; i++)
                     {
-                        if (maids2.ContainsKey(select))
+                        if (maids2.ContainsKey(i))
                         {
-                            maids[i] = maids2[select];
-                            maidNames[i] = maidNames2[select];
+                            maids[i] = maids2[i];
+                            maidNames[i] = maidNames2[i];
                         }
                         else
                         {
