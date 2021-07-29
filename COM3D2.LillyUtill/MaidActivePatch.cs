@@ -21,9 +21,9 @@ namespace COM3D2.LillyUtill
             //set => maidNames = value;
         }
 
-        private static int max=2;
-        private static int maxb=2;
-        
+        private static int max = 2;
+        private static int maxb = 2;
+
         public static int Max { get => max; }
 
         const int c_max = 6;
@@ -64,11 +64,13 @@ namespace COM3D2.LillyUtill
         {
             if (maid == null)
             {
-                if (maids2.ContainsKey(select)){
+                if (maids2.ContainsKey(select))
+                {
                     maids2.Remove(select);
                     maidNames2.Remove(select);
                 }
-            }else if (!maids2.ContainsKey(select))
+            }
+            else if (!maids2.ContainsKey(select))
             {
                 maids2.Add(select, maid);
                 maidNames2.Add(select, maid.status.fullNameEnStyle);
@@ -80,17 +82,17 @@ namespace COM3D2.LillyUtill
             }
 
             int c = 0;
-            if (maids2.Count>0)
+            if (maids2.Count > 0)
             {
-                c=maids2.Keys.Max()+1;//1
+                c = maids2.Keys.Max() + 1;//1
             }
 
             int i1 = c / 3;//0
-            int i2 =  (i1+1) * 3-c;//1
+            int i2 = (i1 + 1) * 3 - c;//1
 
-           // max =  (c / 3 + 1) * 3 ;
+            // max =  (c / 3 + 1) * 3 ;
 
-            if (i2==3)
+            if (i2 == 3)
             {
                 max = c;
             }
@@ -99,7 +101,7 @@ namespace COM3D2.LillyUtill
                 max = c + i2;//3
             }
 
-            LillyUtill.myLog.LogMessage("MaidActivePatch.SetMaid",c, i1, i2, max);
+            LillyUtill.myLog.LogMessage("MaidActivePatch.SetMaid1", c, i1, i2, max, maxb);
 
             //if (max < c_max)
             //{
@@ -110,17 +112,18 @@ namespace COM3D2.LillyUtill
             {
                 Array.Resize(ref maids, max);
                 Array.Resize(ref maidNames, max);
+                LillyUtill.myLog.LogMessage("MaidActivePatch.SetMaid2", maids.Length, maidNames.Length);
                 //maids = new Maid[max];
                 //maidNames = new string[max];
                 if (maxb < max)
-                    for (int i = maxb-1; i < max; i++)
+                    for (int i = maxb ; i < max; i++)
                     {
-                        if (maids2.ContainsKey(i))
-                        {
-                            maids[i] = maids2[i];
-                            maidNames[i] = maidNames2[i];
-                        }
-                        else
+                        //if (maids2.ContainsKey(i))
+                        //{
+                        //    maids[i] = maids2[i];
+                        //    maidNames[i] = maidNames2[i];
+                        //}
+                        //else
                         {
                             maids[i] = null;
                             maidNames[i] = string.Empty;
@@ -128,12 +131,13 @@ namespace COM3D2.LillyUtill
                     }
                 maidCntChg(max);
             }
-            else
+            //else
             {
-                if (select<max)
+                LillyUtill.myLog.LogMessage("MaidActivePatch.SetMaid3", select , max);
+                if (select < max)
                 {
                     maids[select] = maid;
-                    if (maid==null)
+                    if (maid == null)
                     {
                         maidNames[select] = string.Empty;
                     }
@@ -161,16 +165,44 @@ namespace COM3D2.LillyUtill
         {
             if (!f_bMan)// 남자가 아닐때
             {
-                SetMaid(f_nActiveSlotNo, f_maid);
+                try
+                {
+                    SetMaid(f_nActiveSlotNo, f_maid);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogMessage("CharacterMgr.SetMaid", e.ToString());
+                }
                 // maids 의 위치랑 maidNames 의 위치가 같게끔 설정한거
                 //if (f_nActiveSlotNo<18)
                 //{
                 //    Maids[f_nActiveSlotNo] = f_maid; // 내가 만든 메이드 목록중 해당 번호 슬롯에 메이드를 저장
                 //    MaidNames[f_nActiveSlotNo] = f_maid.status.fullNameEnStyle;
                 //}
-                setActive();
-                setActiveMaid(f_maid);
-                setActiveMaid2(f_nActiveSlotNo);
+                try
+                {
+                    setActive();
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.setActive", e.ToString());
+                }
+                try
+                {
+                    setActiveMaid(f_maid);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.setActiveMaid", e.ToString());
+                }
+                try
+                {
+                    setActiveMaid2(f_nActiveSlotNo);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.setActiveMaid2", e.ToString());
+                }
             }
             LillyUtill.myLog.LogMessage("CharacterMgr.SetActive", f_nActiveSlotNo, f_bMan, f_maid.status.fullNameEnStyle);
         }
@@ -186,9 +218,30 @@ namespace COM3D2.LillyUtill
         {
             if (!f_bMan)
             {
-                deactivate();
-                deactivateMaid(f_nActiveSlotNo);
-                SetMaid(f_nActiveSlotNo, null);
+                try
+                {
+                    deactivate();
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.deactivate", e.ToString());
+                }
+                try
+                {
+                    deactivateMaid(f_nActiveSlotNo);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.deactivateMaid", e.ToString());
+                }
+                try
+                {
+                    SetMaid(f_nActiveSlotNo, null);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.SetMaid", e.ToString());
+                }
                 //if (f_nActiveSlotNo < 18)
                 //{
                 //    Maids[f_nActiveSlotNo] = null;
@@ -206,7 +259,7 @@ namespace COM3D2.LillyUtill
 
         const float cWidth = 265;
 
-        
+
 
         /// <summary>
         /// GUI.changed = false; after selectionGrid action
@@ -215,12 +268,12 @@ namespace COM3D2.LillyUtill
         /// <param name="cul"></param>
         /// <returns></returns>
         [Obsolete("use SelectionGrid(int seleted, int cul = 3,float Width=275, bool changed = false)")]
-        public static int SelectionGrid(int seleted,int cul=3,bool changed = false)
+        public static int SelectionGrid(int seleted, int cul = 3, bool changed = false)
         {
             return SelectionGrid(seleted, cul, cWidth, changed);
         }
 
-        public static int SelectionGrid(int seleted, int cul = 3,float Width= cWidth, bool changed = false)
+        public static int SelectionGrid(int seleted, int cul = 3, float Width = cWidth, bool changed = false)
         {
             GUI.changed = changed;
             GUILayout.Label("maid select");
@@ -234,7 +287,7 @@ namespace COM3D2.LillyUtill
         }
 
         [Obsolete("use SelectionGrid(int seleted, int cul = 3,float Width=275, bool changed = false)")]
-        public static int SelectionGrid(int seleted,int cul=3)
+        public static int SelectionGrid(int seleted, int cul = 3)
         {
             return SelectionGrid(seleted, cul, cWidth, false);
         }
