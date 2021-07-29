@@ -27,6 +27,9 @@ namespace COM3D2.LillyUtill
             myLog.LogMessage("Awake");
             Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             PresetUtill.init();
+            MaidActivePatch.init();
+            //MaidActivePatch.maidCntChg(3);
+
         }
     }
 }
