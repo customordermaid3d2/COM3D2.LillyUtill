@@ -1,9 +1,9 @@
-# COM3D2.LillyUtill
+ï»¿# COM3D2.LillyUtill
 
 COM3D2\BepInEx\plugins
 
 
-# ÇÊ¿äÇÑ°Å
+# í•„ìš”í•œê±°
 
 - BepInEx https://github.com/BepInEx/BepInEx  
 - SybarisLoader https://github.com/BepInEx/BepInEx.SybarisLoader.Patcher  
