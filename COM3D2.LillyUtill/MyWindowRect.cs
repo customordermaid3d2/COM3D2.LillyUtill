@@ -161,6 +161,7 @@ namespace COM3D2.LillyUtill
             isOpen = config.Bind("GUI", "isOpen", true);
             isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;
+            GUIChg(IsOpen);
 
             if (harmony == null)
             {

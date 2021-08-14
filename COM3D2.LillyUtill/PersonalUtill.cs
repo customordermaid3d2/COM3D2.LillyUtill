@@ -44,51 +44,59 @@ namespace COM3D2.LillyUtill
             {
                 LillyUtill.myLog.LogMessage("CreateData.personalDataEnable");
                 personalDataEnable = Personal.GetAllDatas(true);
-
-                //bool flag = true;
-                //flag = (GameMain.Instance.CharacterMgr.status.GetFlag("オープニング終了") == 1);
-                List<Personal.Data> list = new List<Personal.Data>();
-                foreach (var data in personalDataEnable)
+                try
                 {
-                    LillyUtill.myLog.LogFatal(data.uniqueName);
-                    if (data.oldPersonal)
+
+                    //bool flag = true;
+                    //flag = (GameMain.Instance.CharacterMgr.status.GetFlag("オープニング終了") == 1);
+                    List<Personal.Data> list = new List<Personal.Data>();
+                    foreach (var data in personalDataEnable)
                     {
-                        string a = data.uniqueName.ToLower();
-                        if (a == "pure" || a == "cool" || a == "pride")
+                        LillyUtill.myLog.LogFatal(data.uniqueName);
+                        if (data.oldPersonal)
                         {
-                            if (!string.IsNullOrEmpty(GameMain.Instance.CMSystem.CM3D2Path) && PluginData.IsEnabled("Legacy"))
-                            //    if (GameMain.Instance.CharacterMgr.status.isAvailableTransfer)
+                            string a = data.uniqueName.ToLower();
+                            if (a == "pure" || a == "cool" || a == "pride")
                             {
-                                //list.Add(data);
+                                if (!string.IsNullOrEmpty(GameMain.Instance.CMSystem.CM3D2Path) && PluginData.IsEnabled("Legacy"))
+                                //    if (GameMain.Instance.CharacterMgr.status.isAvailableTransfer)
+                                {
+                                    //list.Add(data);
+                                }
+                                else
+                                {
+                                    list.Add(data);
+                                }
                             }
+                            //else if (flag)
                             else
                             {
-                                list.Add(data);
+                                if (data.single)
+                                {
+                                    //list.Add(data);
+                                }
+                                else if (!string.IsNullOrEmpty(GameMain.Instance.CMSystem.CM3D2Path) && data.compatible)
+                                {
+                                    //list.Add(data);
+                                }
+                                else
+                                {
+                                    list.Add(data);
+                                }
                             }
                         }
-                        //else if (flag)
                         else
                         {
-                            if (data.single)
-                            {
-                                //list.Add(data);
-                            }
-                            else if (!string.IsNullOrEmpty(GameMain.Instance.CMSystem.CM3D2Path) && data.compatible)
-                            {
-                                //list.Add(data);
-                            }
-                            else
-                            {
-                                list.Add(data);
-                            }
+                            //list.Add(data);
                         }
                     }
-                    else
-                    {
-                        //list.Add(data);
-                    }
+                    personalDataEnable = personalDataEnable.Except(list).ToList();
+
                 }
-                personalDataEnable= personalDataEnable.Except(list).ToList();
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CreateData.personalDataEnable",e.ToString());
+                }
             }
 
         }
