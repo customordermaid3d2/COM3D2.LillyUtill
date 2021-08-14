@@ -10,6 +10,18 @@ namespace COM3D2.LillyUtill
     {
         public ManualLogSource log;// = BepInEx.Logging.Logger.CreateLogSource(MyAttribute.PLAGIN_NAME);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        public MyLog(ManualLogSource log)
+        {
+            init(log);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
         public MyLog(string name)
         {
             init( name);
@@ -20,6 +32,11 @@ namespace COM3D2.LillyUtill
             return log;
         }
 
+        public MyLog init(ManualLogSource log)
+        {
+            this.log =log;
+            return this;
+        }
         public MyLog init(string name)
         {
             log = BepInEx.Logging.Logger.CreateLogSource(name);

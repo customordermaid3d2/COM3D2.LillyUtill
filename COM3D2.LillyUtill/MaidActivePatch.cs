@@ -9,7 +9,9 @@ namespace COM3D2.LillyUtill
 {
     public class MaidActivePatch
     {
+        [Obsolete("use public static Maid GetMaid(int select) or Maids2")]
         public static Maid[] maids = new Maid[3];
+        [Obsolete("use public static string GetMaidName(int select)")]
         public static string[] maidNames = new string[3];
 
         private static Dictionary<int, Maid> maids2 = new Dictionary<int, Maid>();
@@ -26,7 +28,7 @@ namespace COM3D2.LillyUtill
 
         public static int Max { get => max; }
 
-        const int c_max = 6;
+        const int c_max = 6;//41-9=32 25*.25
 
         /// <summary>
         /// if (!f_bMan)
@@ -48,9 +50,11 @@ namespace COM3D2.LillyUtill
             MaidActivePatch.maidCntChg(3);
         }
 
-
-
-
+        public static Maid[] GetMaidAll()
+        {
+            return maids2.Values.ToArray();
+        }
+        
         public static Maid GetMaid(int select)
         {
             if (maids2.ContainsKey(select))
@@ -58,6 +62,15 @@ namespace COM3D2.LillyUtill
                 return maids2[select];
             }
             return null;
+        }
+
+        public static string GetMaidName(int select)
+        {
+            if (maidNames2.ContainsKey(select))
+            {
+                return maidNames2[select];
+            }
+            return string.Empty;
         }
 
         private static void SetMaid(int select, Maid maid)

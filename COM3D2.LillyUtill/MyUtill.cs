@@ -10,6 +10,56 @@ namespace COM3D2.LillyUtill
 {
 	public class MyUtill
 	{
+
+		public static T[] ShuffleArray<T>(T[] array, int seed)
+		{
+			System.Random prng = new System.Random(seed);
+
+			Shuffle(array, prng);
+
+			return array;
+		}
+
+		public static void ShuffleArray<T>(ref T[] array, int seed)
+		{
+			System.Random prng = new System.Random(seed);
+
+			Shuffle(array, prng);
+
+			//return array;
+		}
+
+		public static T[] ShuffleArray<T>(T[] array)
+		{
+			System.Random prng = new System.Random();
+
+			Shuffle(array, prng);
+
+			return array;
+		}
+
+		public static void ShuffleArray<T>(ref T[] array)
+		{
+			System.Random prng = new System.Random();
+
+			Shuffle(array, prng);
+
+			//return array;
+		}
+
+		private static void Shuffle<T>(T[] array, Random prng)
+		{
+			int randomIndex;
+			for (int i = 0; i < array.Length - 1; i++)
+			{
+				randomIndex = prng.Next(i, array.Length);
+				T tempItem = array[randomIndex];
+				array[randomIndex] = array[i];
+				array[i] = tempItem;
+			}
+		}
+
+
 		public static string Join<T>(string separator, IEnumerable<T> values)
 		{
 			if (values == null)
