@@ -23,7 +23,14 @@ namespace COM3D2.LillyUtill
         private static Harmony harmony;
         private static event Action actionSave;
 
+        /// <summary>
+        /// isOpenAction
+        /// </summary>
         private ConfigEntry<bool> isOpen;
+        /// <summary>
+        /// isOpen
+        /// </summary>
+        private event Action<bool> isOpenAction;
 
         public bool IsOpen
         {
@@ -44,6 +51,7 @@ namespace COM3D2.LillyUtill
                     windowRect.x += windowRectOpen.w - windowRectClose.w;
                     windowName = ShortName;
                 }
+                isOpenAction?.Invoke(value);
             }
         }
 
