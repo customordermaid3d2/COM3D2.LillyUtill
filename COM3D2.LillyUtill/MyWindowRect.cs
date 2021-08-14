@@ -37,21 +37,26 @@ namespace COM3D2.LillyUtill
             get => isOpen.Value;
             set
             {
-                if (isOpen.Value = value)
-                {
-                    windowRect.width = windowRectOpen.w;
-                    windowRect.height = windowRectOpen.h;
-                    windowRect.x -= windowRectOpen.w - windowRectClose.w;
-                    windowName = FullName;
-                }
-                else
-                {
-                    windowRect.width = windowRectClose.w;
-                    windowRect.height = windowRectClose.h;
-                    windowRect.x += windowRectOpen.w - windowRectClose.w;
-                    windowName = ShortName;
-                }
+                isOpen.Value = value;                
                 isOpenAction?.Invoke(value);
+            }
+        }
+
+        private void GUIChg(bool value)
+        {
+            if ( value)
+            {
+                windowRect.width = windowRectOpen.w;
+                windowRect.height = windowRectOpen.h;
+                windowRect.x -= windowRectOpen.w - windowRectClose.w;
+                windowName = FullName;
+            }
+            else
+            {
+                windowRect.width = windowRectClose.w;
+                windowRect.height = windowRectClose.h;
+                windowRect.x += windowRectOpen.w - windowRectClose.w;
+                windowName = ShortName;
             }
         }
 
@@ -154,6 +159,7 @@ namespace COM3D2.LillyUtill
             windowRectOpen = new Size(wo, ho);
             windowRectClose = new Size(wc, hc);
             isOpen = config.Bind("GUI", "isOpen", true);
+            isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;
 
             if (harmony == null)
@@ -167,6 +173,11 @@ namespace COM3D2.LillyUtill
 
             winNum = winCnt++;
             load();
+        }
+
+        private void isOpenSettingChanged(object sender, EventArgs e)
+        {
+            GUIChg((bool)((SettingChangedEventArgs)e).ChangedSetting.BoxedValue);
         }
 
         public void load()
