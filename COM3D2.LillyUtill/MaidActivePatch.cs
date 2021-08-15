@@ -9,9 +9,9 @@ namespace COM3D2.LillyUtill
 {
     public class MaidActivePatch
     {
-        [Obsolete("use public static Maid GetMaid(int select) or Maids2")]
+        //[Obsolete("use public static Maid GetMaid(int select) or Maids2")]
         public static Maid[] maids = new Maid[3];
-        [Obsolete("use public static string GetMaidName(int select)")]
+        //[Obsolete("use public static string GetMaidName(int select)")]
         public static string[] maidNames = new string[3];
 
         private static Dictionary<int, Maid> maids2 = new Dictionary<int, Maid>();
@@ -20,6 +20,12 @@ namespace COM3D2.LillyUtill
         public static Dictionary<int, Maid> Maids2
         {
             get => maids2;
+            //set => maidNames = value;
+        }
+        
+        public static Dictionary<int, string> MaidNames2
+        {
+            get => maidNames2;
             //set => maidNames = value;
         }
 
@@ -36,6 +42,7 @@ namespace COM3D2.LillyUtill
         public static event Action setActive = delegate { };
         public static event Action<Maid> setActiveMaid = delegate { };
         public static event Action<int> setActiveMaid2 = delegate { };
+        public static event Action<int, Maid> setActiveMaid3 = delegate { };
 
         /// <summary>
         /// if (!f_bMan)
@@ -216,6 +223,14 @@ namespace COM3D2.LillyUtill
                 {
                     LillyUtill.myLog.LogFatal("CharacterMgr.setActiveMaid2", e.ToString());
                 }
+                try
+                {
+                    setActiveMaid3(f_nActiveSlotNo, f_maid);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.setActiveMaid3", e.ToString());
+                }
             }
             LillyUtill.myLog.LogMessage("CharacterMgr.SetActive", f_nActiveSlotNo, f_bMan, f_maid.status.fullNameEnStyle);
         }
@@ -272,20 +287,26 @@ namespace COM3D2.LillyUtill
 
         const float cWidth = 265;
 
-
-
         /// <summary>
         /// GUI.changed = false; after selectionGrid action
         /// </summary>
         /// <param name="seleted"></param>
         /// <param name="cul"></param>
         /// <returns></returns>
-        [Obsolete("use SelectionGrid(int seleted, int cul = 3,float Width=275, bool changed = false)")]
+        [Obsolete("use SelectionGrid(int seleted, int cul = 3,float Width=265, bool changed = false)")]
         public static int SelectionGrid(int seleted, int cul = 3, bool changed = false)
         {
             return SelectionGrid(seleted, cul, cWidth, changed);
         }
 
+        /// <summary>
+        /// event Action selectionGrid run
+        /// </summary>
+        /// <param name="seleted"></param>
+        /// <param name="cul"></param>
+        /// <param name="Width"></param>
+        /// <param name="changed"></param>
+        /// <returns></returns>
         public static int SelectionGrid(int seleted, int cul = 3, float Width = cWidth, bool changed = false)
         {
             GUI.changed = changed;
@@ -298,8 +319,29 @@ namespace COM3D2.LillyUtill
             }
             return seleted;
         }
+        
+        /// <summary>
+        /// event Action selectionGrid run
+        /// </summary>
+        /// <param name="seleted"></param>
+        /// <param name="cul"></param>
+        /// <param name="Width"></param>
+        /// <param name="changed"></param>
+        /// <returns></returns>
+        public static int SelectionGrid2(int seleted, int cul = 3, float Width = cWidth, bool changed = false)
+        {
+            GUI.changed = changed;
+            GUILayout.Label("maid select");
+            seleted = GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width));
+            if (GUI.changed)
+            {
+                selectionGrid();
+                GUI.changed = false;
+            }
+            return seleted;
+        }
 
-        [Obsolete("use SelectionGrid(int seleted, int cul = 3,float Width=275, bool changed = false)")]
+        [Obsolete("use SelectionGrid(int seleted, int cul = 3,float Width=265, bool changed = false)")]
         public static int SelectionGrid(int seleted, int cul = 3)
         {
             return SelectionGrid(seleted, cul, cWidth, false);
