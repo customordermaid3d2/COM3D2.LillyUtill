@@ -35,17 +35,24 @@ namespace COM3D2.LillyUtill
 
         private static void CreateData()
         {
-            if (personalDataAll == null)
+            try
             {
-                LillyUtill.myLog.LogMessage("CreateData.personalDataAll");
-                personalDataAll = Personal.GetAllDatas(false);               
-            }
-            if (personalDataEnable == null)
-            {
-                LillyUtill.myLog.LogMessage("CreateData.personalDataEnable");
-                personalDataEnable = Personal.GetAllDatas(true);
-                try
+                if (personalDataAll == null)
                 {
+                    LillyUtill.myLog.LogMessage("CreateData.personalDataAll");
+                    personalDataAll = Personal.GetAllDatas(false);
+                }
+            }
+            catch (Exception e)
+            {
+                LillyUtill.myLog.LogError("CreateData.personalDataAll", e.ToString());
+            }
+            try
+            {
+                if (personalDataEnable == null)
+                {
+                    LillyUtill.myLog.LogMessage("CreateData.personalDataEnable");
+                    personalDataEnable = Personal.GetAllDatas(true);
 
                     //bool flag = true;
                     //flag = (GameMain.Instance.CharacterMgr.status.GetFlag("オープニング終了") == 1);
@@ -93,10 +100,10 @@ namespace COM3D2.LillyUtill
                     personalDataEnable = personalDataEnable.Except(list).ToList();
 
                 }
-                catch (Exception e)
-                {
-                    LillyUtill.myLog.LogFatal("CreateData.personalDataEnable",e.ToString());
-                }
+            }
+            catch (Exception e)
+            {
+                LillyUtill.myLog.LogError("CreateData.personalDataEnable", e.ToString());
             }
 
         }

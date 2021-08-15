@@ -47,9 +47,13 @@ namespace COM3D2.LillyUtill
         /// <summary>
         /// if (!f_bMan)
         /// </summary>
+       
         public static event Action deactivate = delegate { };
         public static event Action<int> deactivateMaid = delegate { };
 
+        /// <summary>
+        /// Awake, SetActive, Deactivate run
+        /// </summary>
         public static event Action<int> maidCntChg = delegate { };
 
         internal static void init()
@@ -90,15 +94,15 @@ namespace COM3D2.LillyUtill
                     maidNames2.Remove(select);
                 }
             }
-            else if (!maids2.ContainsKey(select))
-            {
-                maids2.Add(select, maid);
-                maidNames2.Add(select, maid.status.fullNameEnStyle);
-            }
-            else
+            else if (maids2.ContainsKey(select))
             {
                 maids2[select] = maid;
                 maidNames2[select] = maid.status.fullNameEnStyle;
+            }
+            else
+            {
+                maids2.Add(select, maid);
+                maidNames2.Add(select, maid.status.fullNameEnStyle);
             }
 
             int c = 0;
@@ -183,8 +187,10 @@ namespace COM3D2.LillyUtill
         [HarmonyPostfix]// CharacterMgr의 SetActive가 실행 후에 아래 메소드 작동
         public static void SetActive(Maid f_maid, int f_nActiveSlotNo, bool f_bMan)
         {
+
             if (!f_bMan)// 남자가 아닐때
             {
+                LillyUtill.myLog.LogMessage("CharacterMgr.SetActive", f_maid.status.fullNameEnStyle);
                 try
                 {
                     SetMaid(f_nActiveSlotNo, f_maid);
@@ -246,6 +252,8 @@ namespace COM3D2.LillyUtill
         {
             if (!f_bMan)
             {
+                LillyUtill.myLog.LogMessage("CharacterMgr.Deactivate", f_nActiveSlotNo);
+
                 try
                 {
                     deactivate();
@@ -270,20 +278,13 @@ namespace COM3D2.LillyUtill
                 {
                     LillyUtill.myLog.LogFatal("CharacterMgr.SetMaid", e.ToString());
                 }
-                //if (f_nActiveSlotNo < 18)
-                //{
-                //    Maids[f_nActiveSlotNo] = null;
-                //    MaidNames[f_nActiveSlotNo] = string.Empty;
-                //}
-                //else
-                //{
-                //    LillyUtill.myLog.LogWarning("CharacterMgr.Deactivate", f_nActiveSlotNo);
-                //}
             }
             LillyUtill.myLog.LogMessage("CharacterMgr.Deactivate", f_nActiveSlotNo, f_bMan);
         }
 
+        [Obsolete("use selectionGrid2")]
         public static event Action selectionGrid = delegate { };
+        public static event Action<int> selectionGrid2 = delegate { };
 
         const float cWidth = 265;
 
@@ -336,6 +337,7 @@ namespace COM3D2.LillyUtill
             if (GUI.changed)
             {
                 selectionGrid();
+                selectionGrid2(seleted);
                 GUI.changed = false;
             }
             return seleted;

@@ -37,14 +37,14 @@ namespace COM3D2.LillyUtill
             get => isOpen.Value;
             set
             {
-                isOpen.Value = value;                
+                isOpen.Value = value;
                 isOpenAction?.Invoke(value);
             }
         }
 
         private void GUIChg(bool value)
         {
-            if ( value)
+            if (value)
             {
                 windowRect.width = windowRectOpen.w;
                 windowRect.height = windowRectOpen.h;
@@ -79,7 +79,7 @@ namespace COM3D2.LillyUtill
             }
         }
 
-        struct Size
+        public struct Size
         {
             public float w;
             public float h;
@@ -107,6 +107,19 @@ namespace COM3D2.LillyUtill
         public float Width { get => windowRect.width; set => windowRect.width = value; }
         public float X { get => windowRect.x; set => windowRect.x = value; }
         public float Y { get => windowRect.y; set => windowRect.y = value; }
+
+        public Size WindowRectOpen { get => windowRectOpen; }
+
+        /// <summary>
+        /// use after start 
+        /// </summary>
+        public float WindowRectOpenW { set { windowRectOpen.w = value; GUIChg(IsOpen); } }
+        /// <summary>
+        /// use after start 
+        /// </summary>
+        public float WindowRectOpenH { set { windowRectOpen.h = value; GUIChg(IsOpen); } }
+
+        public Size WindowRectClose { get => windowRectClose; }
 
         public int winNum;
         public static int winCnt;
@@ -158,6 +171,7 @@ namespace COM3D2.LillyUtill
             windowRect = new Rect(x, y, wo, ho);
             windowRectOpen = new Size(wo, ho);
             windowRectClose = new Size(wc, hc);
+            LillyUtill.myLog.LogMessage("MyWindowRect.cret", fileName);
             isOpen = config.Bind("GUI", "isOpen", true);
             isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;

@@ -9,9 +9,9 @@ namespace COM3D2.LillyUtill
 {
     class MyAttribute
     {
-        public const string PLAGIN_NAME = "Sample";
-        public const string PLAGIN_VERSION = "21.8.14.21";
-        public const string PLAGIN_FULL_NAME = "COM3D2.Sample.Plugin";
+        public const string PLAGIN_NAME = "LillyUtill";
+        public const string PLAGIN_VERSION = "21.8.15.21";
+        public const string PLAGIN_FULL_NAME = "COM3D2.LillyUtill.Plugin";
     }
 
     [BepInPlugin(MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, MyAttribute.PLAGIN_VERSION)]// 버전 규칙 잇음. 반드시 2~4개의 숫자구성으로 해야함. 미준수시 못읽어들임
@@ -21,9 +21,13 @@ namespace COM3D2.LillyUtill
     {
         public static MyLog myLog;
 
-        public void Awake()
+        public LillyUtill()
         {
             myLog = new MyLog(MyAttribute.PLAGIN_NAME);
+        }
+
+        public void Awake()
+        {
             myLog.LogMessage("Awake");
             Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             PresetUtill.init();

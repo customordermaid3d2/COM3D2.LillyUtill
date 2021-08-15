@@ -230,6 +230,8 @@ namespace COM3D2.LillyUtill
 
             if (GUILayout.Button("-", GUILayout.Width(20), GUILayout.Height(20))) { IsOpen = !IsOpen; }
             if (GUILayout.Button("x", GUILayout.Width(20), GUILayout.Height(20))) { isGUIOn = false; }
+            GUI.changed = false;
+
             GUILayout.EndHorizontal();// 가로 정렬 끝
 
             if (!IsOpen)
