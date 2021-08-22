@@ -320,7 +320,13 @@ namespace COM3D2.LillyUtill
             }
             return seleted;
         }
-        
+
+        public static int SelectionGrid3(int seleted, int cul = 3, float Width = cWidth, bool changed = false )
+        {
+            return GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width)); 
+        }
+
+
         /// <summary>
         /// event Action selectionGrid run
         /// </summary>

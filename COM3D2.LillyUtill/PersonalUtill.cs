@@ -59,7 +59,7 @@ namespace COM3D2.LillyUtill
                     List<Personal.Data> list = new List<Personal.Data>();
                     foreach (var data in personalDataEnable)
                     {
-                        LillyUtill.myLog.LogFatal(data.uniqueName);
+                        LillyUtill.myLog.LogMessage(data.uniqueName);
                         if (data.oldPersonal)
                         {
                             string a = data.uniqueName.ToLower();
