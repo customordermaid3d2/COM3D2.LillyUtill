@@ -13,7 +13,15 @@ namespace COM3D2.LillyUtill
 
         public static void init()
         {
-            presetlist = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "Preset"), "*.preset", SearchOption.AllDirectories);
+            var path = Path.Combine(Environment.CurrentDirectory, "Preset");
+            if (Directory.Exists(path))
+            {
+                presetlist = Directory.GetFiles(path, "*.preset", SearchOption.AllDirectories);
+            }
+            else
+            {
+                presetlist = new string[]{};
+            }
         }
 
         public static void SetMaidRandPreset(Maid m_maid)
