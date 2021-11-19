@@ -181,7 +181,7 @@ namespace COM3D2.LillyUtill
 
         public virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            myWindowRect.save();// 장면 이동시 GUI 창 위치 저장
+            //myWindowRect.save();// 장면 이동시 GUI 창 위치 저장
         }
 
         public virtual void Update()
@@ -260,7 +260,7 @@ namespace COM3D2.LillyUtill
         /// </summary>
         public virtual void OnApplicationQuit()
         {
-            myWindowRect?.save();
+            //myWindowRect?.save();
             //MyLog.LogMessage("OnApplicationQuit");
         }
 
@@ -269,7 +269,7 @@ namespace COM3D2.LillyUtill
         /// </summary>
         public virtual void OnDisable()
         {
-            myWindowRect?.save();
+            //myWindowRect?.save();
             SceneManager.sceneLoaded -= this.OnSceneLoaded;
         }
 

@@ -210,6 +210,11 @@ namespace COM3D2.LillyUtill
             windowRect.y = position.y;
         }
 
+        /// <summary>
+        /// 사용 금지
+        /// [HarmonyPatch(typeof(GameMain), "LoadScene")] 를 이용해서 자동 저장됨
+        /// </summary>
+        [Obsolete("[HarmonyPatch(typeof(GameMain), \"LoadScene\")] 를 이용해서 자동 저장됨")]
         public void save()
         {
             position.x = windowRect.x;
@@ -220,7 +225,13 @@ namespace COM3D2.LillyUtill
 
         [HarmonyPatch(typeof(GameMain), "LoadScene")]
         [HarmonyPostfix]
-        public static void LoadScene()
+        public static void LoadScene(string f_strSceneName)
+        {
+            if(f_strSceneName!="SceneADV")
+                actionSave();
+        }
+
+        public static void ActionSave()
         {
             actionSave();
         }

@@ -20,6 +20,7 @@ namespace COM3D2.LillyUtill
     class LillyUtill : BaseUnityPlugin
     {
         public static MyLog myLog;
+        public static Harmony maidActivePatch;
 
         public LillyUtill()
         {
@@ -29,11 +30,19 @@ namespace COM3D2.LillyUtill
         public void Awake()
         {
             myLog.LogMessage("Awake");
-            Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
+            maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             PresetUtill.init();
             MaidActivePatch.init();
             //MaidActivePatch.maidCntChg(3);
 
         }
+
+        public void OnDisable()
+        {
+            myLog.LogMessage("OnDisable");
+            MyWindowRect.ActionSave();
+        }
+
+
     }
 }
