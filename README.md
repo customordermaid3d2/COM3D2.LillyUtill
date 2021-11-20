@@ -1,7 +1,5 @@
 ﻿# COM3D2.LillyUtill
 
-COM3D2\BepInEx\plugins
-
 
 # 필요한거
 
@@ -10,3 +8,8 @@ COM3D2\BepInEx\plugins
 - UnityInjectorLoader https://github.com/BepInEx/BepInEx.UnityInjectorLoader  
 
 - COM3D2.API.dll  https://github.com/DeathWeasel1337/COM3D2_Plugins/releases/download/v3/COM3D2.API.v1.0.zip
+
+
+# 설치위치
+
+COM3D2\BepInEx\plugins
