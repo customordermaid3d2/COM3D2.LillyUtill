@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,16 @@ namespace COM3D2.LillyUtill
     [BepInPlugin(MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, MyAttribute.PLAGIN_VERSION)]// 버전 규칙 잇음. 반드시 2~4개의 숫자구성으로 해야함. 미준수시 못읽어들임
     //[BepInPlugin("COM3D2.Sample.Plugin", "COM3D2.Sample.Plugin", "21.6.6")]// 버전 규칙 잇음. 반드시 2~4개의 숫자구성으로 해야함. 미준수시 못읽어들임
     [BepInProcess("COM3D2x64.exe")]
-    class LillyUtill : BaseUnityPlugin
+    public class LillyUtill : BaseUnityPlugin
     {
         public static MyLog myLog;
         public static Harmony maidActivePatch;
+        public static ConfigFile config;
 
-        public LillyUtill()
+        public LillyUtill() : base()
         {
-            myLog = new MyLog(MyAttribute.PLAGIN_NAME);
+            config = Config;
+            myLog = new MyLog(MyAttribute.PLAGIN_NAME, Config);
         }
 
         public void Awake()

@@ -1,6 +1,9 @@
-﻿using BepInEx.Logging;
+﻿using BepInEx;
+using BepInEx.Configuration;
+using BepInEx.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,14 +13,22 @@ namespace COM3D2.LillyUtill
     {
         public ManualLogSource log;// = BepInEx.Logging.Logger.CreateLogSource(MyAttribute.PLAGIN_NAME);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
+        public ConfigEntry<bool> IsLogingLogMessage=null;
+        public ConfigEntry<bool> IsLogingLogDebug = null;
+        public ConfigEntry<bool> IsLogingLogInfo = null;
+        public ConfigEntry<bool> IsLogingLogWarning = null;
+
+
         public MyLog(ManualLogSource log)
         {
             init(log);
         }
+        
+        public MyLog(ManualLogSource log, ConfigFile config)
+        {
+            init(log, config);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -25,6 +36,11 @@ namespace COM3D2.LillyUtill
         public MyLog(string name)
         {
             init( name);
+        }
+        
+        public MyLog(string name, ConfigFile config)
+        {
+            init( name, config);
         }
 
         public ManualLogSource GetLog()
@@ -35,12 +51,38 @@ namespace COM3D2.LillyUtill
         public MyLog init(ManualLogSource log)
         {
             this.log =log;
+            ConfigEntry(new ConfigFile(Path.Combine(Paths.ConfigPath, "COM3D2." + log.SourceName) + ".MyLog.cfg", true));
             return this;
         }
+        
+        public MyLog init(ManualLogSource log, ConfigFile config)
+        {
+            this.log =log;
+            ConfigEntry(config); 
+            return this;
+        }
+
         public MyLog init(string name)
         {
             log = BepInEx.Logging.Logger.CreateLogSource(name);
+            // Path.Combine(Paths.ConfigPath, "COM3D2.HighHeel");
+            ConfigEntry(new ConfigFile(Path.Combine(Paths.ConfigPath, "COM3D2."+ name) + ".MyLog.cfg", true));            
             return this;
+        }
+        
+        public MyLog init(string name, ConfigFile config)
+        {
+            log = BepInEx.Logging.Logger.CreateLogSource(name);
+            ConfigEntry(config);
+            return this;
+        }
+
+        public void ConfigEntry(ConfigFile config)
+        {
+            IsLogingLogDebug = config.Bind("MyLog", "IsLogingLogDebug", false);
+            IsLogingLogInfo = config.Bind("MyLog", "IsLogingLogInfo", false);
+            IsLogingLogMessage = config.Bind("MyLog", "IsLogingLogMessage", true);
+            IsLogingLogWarning = config.Bind("MyLog", "IsLogingLogWarning", true);
         }
 
         public void LogLine()
@@ -80,19 +122,24 @@ namespace COM3D2.LillyUtill
 
         public void LogDebug(params object[] args)
         {
-            LogOut(args, log.LogDebug);
+            if (IsLogingLogDebug == null || IsLogingLogDebug.Value)
+                LogOut(args, log.LogDebug);
             // ConsoleOut(args);
         }
 
         public void LogInfo(params object[] args)
         {
-            LogOut(args, log.LogInfo);
+            if (IsLogingLogInfo == null || IsLogingLogInfo.Value)
+                LogOut(args, log.LogInfo);
             //ConsoleOut(args, ConsoleColor.DarkGray);
         }
 
         public void LogMessage(params object[] args)
         {
-            LogOut(args, log.LogMessage);
+            if (IsLogingLogMessage == null || IsLogingLogMessage.Value)
+            {
+                LogOut(args, log.LogMessage);
+            }
             // ConsoleOut(args, ConsoleColor.DarkBlue);
         }
 
@@ -132,7 +179,10 @@ namespace COM3D2.LillyUtill
 
         public void LogWarning(params object[] args)
         {
-            LogOut(args, log.LogWarning);
+            if (IsLogingLogWarning == null || IsLogingLogWarning.Value)
+            {                
+                LogOut(args, log.LogWarning);
+            }
             //ConsoleOut(args, ConsoleColor.DarkYellow);
         }
 
