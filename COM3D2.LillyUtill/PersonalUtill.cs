@@ -39,7 +39,7 @@ namespace COM3D2.LillyUtill
             {
                 if (personalDataAll == null)
                 {
-                    LillyUtill.myLog.LogMessage("CreateData.personalDataAll");
+                    LillyUtill.myLog.LogInfo("CreateData.personalDataAll");
                     personalDataAll = Personal.GetAllDatas(false);
                 }
             }
@@ -51,7 +51,7 @@ namespace COM3D2.LillyUtill
             {
                 if (personalDataEnable == null)
                 {
-                    LillyUtill.myLog.LogMessage("CreateData.personalDataEnable");
+                    LillyUtill.myLog.LogInfo("CreateData.personalDataEnable");
                     personalDataEnable = Personal.GetAllDatas(true);
 
                     //bool flag = true;
@@ -59,7 +59,7 @@ namespace COM3D2.LillyUtill
                     List<Personal.Data> list = new List<Personal.Data>();
                     foreach (var data in personalDataEnable)
                     {
-                        LillyUtill.myLog.LogMessage(data.uniqueName);
+                        LillyUtill.myLog.LogInfo(data.uniqueName);
                         if (data.oldPersonal)
                         {
                             string a = data.uniqueName.ToLower();

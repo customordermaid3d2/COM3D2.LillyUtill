@@ -27,11 +27,12 @@ namespace COM3D2.LillyUtill
         public LillyUtill() : base()
         {
             config = Config;
-            myLog = new MyLog(MyAttribute.PLAGIN_NAME, Config);
+            
         }
 
         public void Awake()
         {
+            myLog = new MyLog(Logger, Config);
             myLog.LogMessage("Awake");
             maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             PresetUtill.init();

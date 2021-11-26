@@ -171,7 +171,7 @@ namespace COM3D2.LillyUtill
             windowRect = new Rect(x, y, wo, ho);
             windowRectOpen = new Size(wo, ho);
             windowRectClose = new Size(wc, hc);
-            LillyUtill.myLog.LogMessage("MyWindowRect.cret", fileName);
+            LillyUtill.myLog.LogInfo("MyWindowRect.cret", fileName);
             isOpen = config.Bind("GUI", "isOpen", true);
             isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;
