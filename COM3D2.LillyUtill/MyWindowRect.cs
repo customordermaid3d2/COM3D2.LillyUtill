@@ -213,8 +213,9 @@ namespace COM3D2.LillyUtill
         /// <summary>
         /// 사용 금지
         /// [HarmonyPatch(typeof(GameMain), "LoadScene")] 를 이용해서 자동 저장됨
+        /// LillyUtill.OnDisable 에서 ActionSave() 로 자동 저장.
         /// </summary>
-        [Obsolete("[HarmonyPatch(typeof(GameMain), \"LoadScene\")] 를 이용해서 자동 저장됨")]
+        [Obsolete("[HarmonyPatch(typeof(GameMain), \"LoadScene\")] 를 이용해서 자동 저장됨. LillyUtill.OnDisable 에서 ActionSave() 로 자동 저장.")]
         public void save()
         {
             position.x = windowRect.x;

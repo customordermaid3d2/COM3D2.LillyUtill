@@ -31,8 +31,10 @@ namespace COM3D2.LillyUtill
 
         private static int max = 2;
         private static int maxb = 2;
+        private static int seleced = 0;
 
         public static int Max { get => max; }
+
 
         const int c_max = 6;//41-9=32 25*.25
 
@@ -43,6 +45,20 @@ namespace COM3D2.LillyUtill
         public static event Action<Maid> setActiveMaid = delegate { };
         public static event Action<int> setActiveMaid2 = delegate { };
         public static event Action<int, Maid> setActiveMaid3 = delegate { };
+
+        /// <summary>
+        /// Maid SelectMaid(int select)
+        /// MaidActivePatch.seleced
+        /// selecedMaid
+        /// </summary>
+        public static int Seleced { get => seleced; }
+
+        /// <summary>
+        /// Maid SelectMaid(int select)
+        /// MaidActivePatch.seleced
+        /// selecedMaid
+        /// </summary>
+        public static event Action<int> selecedMaid = delegate { };
 
         /// <summary>
         /// if (!f_bMan)
@@ -65,7 +81,27 @@ namespace COM3D2.LillyUtill
         {
             return maids2.Values.ToArray();
         }
-        
+
+        /// <summary>
+        /// Maid SelectMaid(int select)
+        /// MaidActivePatch.seleced
+        /// selecedMaid
+        /// </summary>
+        /// <param name="select"></param>
+        /// <returns></returns>
+        public static Maid SelectMaid(int select)
+        {
+            if (maids2.ContainsKey(select))
+            {
+                MaidActivePatch.seleced = select;
+                selecedMaid(select);
+                return maids2[select];
+            }
+            MaidActivePatch.seleced = 0;
+            selecedMaid(0);
+            return null;
+        }        
+
         public static Maid GetMaid(int select)
         {
             if (maids2.ContainsKey(select))
@@ -315,14 +351,24 @@ namespace COM3D2.LillyUtill
             seleted = GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width));
             if (GUI.changed)
             {
+                MaidActivePatch.seleced = seleted;
                 selectionGrid();
                 GUI.changed = false;
             }
             return seleted;
         }
 
+        /// <summary>
+        /// no event action selectionGrid,selectionGrid2
+        /// </summary>
+        /// <param name="seleted"></param>
+        /// <param name="cul"></param>
+        /// <param name="Width"></param>
+        /// <param name="changed"></param>
+        /// <returns></returns>
         public static int SelectionGrid3(int seleted, int cul = 3, float Width = cWidth, bool changed = false )
         {
+            MaidActivePatch.seleced = seleted;
             return GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width)); 
         }
 
@@ -342,6 +388,7 @@ namespace COM3D2.LillyUtill
             seleted = GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width));
             if (GUI.changed)
             {
+                MaidActivePatch.seleced = seleted;
                 selectionGrid();
                 selectionGrid2(seleted);
                 GUI.changed = false;
