@@ -166,7 +166,19 @@ namespace COM3D2.LillyUtill
         public static int winCnt;
 
 
-
+        /// <summary>
+        /// 이런식으로 일부 인수 변경 가능. 
+        /// ho: 300
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="fileName"></param>
+        /// <param name="wc"></param>
+        /// <param name="wo"></param>
+        /// <param name="hc"></param>
+        /// <param name="ho"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="windowSpace"></param>
         public MyWindowRect(ConfigFile config,
                             string fileName,
                             float wc = 100f,

@@ -13,7 +13,7 @@ namespace COM3D2.LillyUtill
     class MyAttribute
     {
         public const string PLAGIN_NAME = "LillyUtill";
-        public const string PLAGIN_VERSION = "21.8.15.21";
+        public const string PLAGIN_VERSION = "22.1.4.1";
         public const string PLAGIN_FULL_NAME = "COM3D2.LillyUtill.Plugin";
     }
 
@@ -66,7 +66,7 @@ namespace COM3D2.LillyUtill
 
         public void Start()
         {
-            myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU");
+            myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU", ho: 300);
             IsGUIOn = config.Bind("GUI", "isGUIOn", false);
 
             // 이건 기어메뉴 아이콘
