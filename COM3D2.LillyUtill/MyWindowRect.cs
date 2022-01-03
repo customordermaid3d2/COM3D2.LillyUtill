@@ -23,6 +23,8 @@ namespace COM3D2.LillyUtill
         private static Harmony harmony;
         private static event Action actionSave;
 
+        private static readonly List<MyWindowRect> myWindowRects = new List<MyWindowRect>();
+
         /// <summary>
         /// isOpenAction
         /// </summary>
@@ -30,7 +32,8 @@ namespace COM3D2.LillyUtill
         /// <summary>
         /// isOpen
         /// </summary>
-        private event Action<bool> isOpenAction;
+        //private event Action<bool> isOpenAction;
+
 
         public bool IsOpen
         {
@@ -38,27 +41,45 @@ namespace COM3D2.LillyUtill
             set
             {
                 isOpen.Value = value;
-                isOpenAction?.Invoke(value);
+                //isOpenAction?.Invoke(value);
+                if (value)
+                {
+                    windowRect.width = windowRectOpen.w;
+                    windowRect.height = windowRectOpen.h;
+                    X -= windowRectOpen.w - windowRectClose.w;
+                    windowName = FullName;
+                }
+                else
+                {
+                    windowRect.width = windowRectClose.w;
+                    windowRect.height = windowRectClose.h;
+                    Y += windowRectOpen.w - windowRectClose.w;
+                    windowName = ShortName;
+                }
             }
         }
 
-        private void GUIChg(bool value)
-        {
-            if (value)
-            {
-                windowRect.width = windowRectOpen.w;
-                windowRect.height = windowRectOpen.h;
-                windowRect.x -= windowRectOpen.w - windowRectClose.w;
-                windowName = FullName;
-            }
-            else
-            {
-                windowRect.width = windowRectClose.w;
-                windowRect.height = windowRectClose.h;
-                windowRect.x += windowRectOpen.w - windowRectClose.w;
-                windowName = ShortName;
-            }
-        }
+        public string windowName;
+        public string FullName;
+        public string ShortName;
+
+       //private void GUIChg(bool value)
+       //{
+       //    if (value)
+       //    {
+       //        windowRect.width = windowRectOpen.w;
+       //        windowRect.height = windowRectOpen.h;
+       //        windowRect.x -= windowRectOpen.w - windowRectClose.w;
+       //        windowName = FullName;
+       //    }
+       //    else
+       //    {
+       //        windowRect.width = windowRectClose.w;
+       //        windowRect.height = windowRectClose.h;
+       //        windowRect.x += windowRectOpen.w - windowRectClose.w;
+       //        windowName = ShortName;
+       //    }
+       //}
 
         private static event Action<int, int> actionScreen;
 
@@ -96,37 +117,55 @@ namespace COM3D2.LillyUtill
             get
             {
                 // 윈도우 리사이즈시 밖으로 나가버리는거 방지
-                windowRect.x = Mathf.Clamp(windowRect.x, -windowRect.width + windowSpace, Screen.width - windowSpace);
-                windowRect.y = Mathf.Clamp(windowRect.y, -windowRect.height + windowSpace, Screen.height - windowSpace);
                 return windowRect;
             }
-            set => windowRect = value;
+            set
+            {
+                windowRect = value;
+                windowRect.x = Mathf.Clamp(windowRect.x, -windowRect.width + windowSpace, Screen.width - windowSpace);
+                windowRect.y = Mathf.Clamp(windowRect.y, -windowRect.height + windowSpace, Screen.height - windowSpace);
+            }
         }
 
         public float Height { get => windowRect.height; set => windowRect.height = value; }
+
         public float Width { get => windowRect.width; set => windowRect.width = value; }
-        public float X { get => windowRect.x; set => windowRect.x = value; }
-        public float Y { get => windowRect.y; set => windowRect.y = value; }
+
+        public float X { 
+            get => windowRect.x;
+            set
+            {
+                windowRect.x = value;
+                windowRect.x = Mathf.Clamp(windowRect.x, -windowRect.width + windowSpace, Screen.width - windowSpace);
+            }
+        }
+
+        public float Y { 
+            get => windowRect.y;
+            set { 
+                windowRect.y = value;
+                windowRect.y = Mathf.Clamp(windowRect.y, -windowRect.height + windowSpace, Screen.height - windowSpace);
+            }
+        }
 
         public Size WindowRectOpen { get => windowRectOpen; }
 
         /// <summary>
         /// use after start 
         /// </summary>
-        public float WindowRectOpenW { set { windowRectOpen.w = value; GUIChg(IsOpen); } }
+       // public float WindowRectOpenW { set { windowRectOpen.w = value; GUIChg(IsOpen); } }
         /// <summary>
         /// use after start 
         /// </summary>
-        public float WindowRectOpenH { set { windowRectOpen.h = value; GUIChg(IsOpen); } }
+        //public float WindowRectOpenH { set { windowRectOpen.h = value; GUIChg(IsOpen); } }
 
         public Size WindowRectClose { get => windowRectClose; }
+
 
         public int winNum;
         public static int winCnt;
 
-        public string windowName;
-        public string FullName;
-        public string ShortName;
+
 
         public MyWindowRect(ConfigFile config,
                             string fileName,
@@ -139,6 +178,7 @@ namespace COM3D2.LillyUtill
                             float windowSpace = 32f)
         {
             cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
+            myWindowRects.Add(this);
         }
 
         /// <summary>
@@ -161,6 +201,7 @@ namespace COM3D2.LillyUtill
             FullName = windowFullName;
             ShortName = windowShortName;
             cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
+            myWindowRects.Add(this);
         }
 
         private void cret(ConfigFile config, string fileName, float wc, float wo, float hc, float ho, float x, float y, float windowSpace)
@@ -173,9 +214,9 @@ namespace COM3D2.LillyUtill
             windowRectClose = new Size(wc, hc);
             LillyUtill.myLog.LogInfo("MyWindowRect.cret", fileName);
             isOpen = config.Bind("GUI", "isOpen", true);
-            isOpen.SettingChanged += isOpenSettingChanged;
+            //isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;
-            GUIChg(IsOpen);
+            //GUIChg(IsOpen);
 
             if (harmony == null)
             {
@@ -190,10 +231,10 @@ namespace COM3D2.LillyUtill
             load();
         }
 
-        private void isOpenSettingChanged(object sender, EventArgs e)
-        {
-            GUIChg((bool)((SettingChangedEventArgs)e).ChangedSetting.BoxedValue);
-        }
+        //private void isOpenSettingChanged(object sender, EventArgs e)
+        //{
+        //    GUIChg((bool)((SettingChangedEventArgs)e).ChangedSetting.BoxedValue);
+        //}
 
         public void load()
         {
@@ -240,13 +281,13 @@ namespace COM3D2.LillyUtill
 
         public void ScreenChg(int width, int height)
         {
-            if (windowRect.x > widthbak / 2)
+            if (X > widthbak / 2)
             {
-                windowRect.x += width - widthbak;
+                X= width - widthbak;
             }
-            if (windowRect.y > heightbak / 2)
+            if (Y > heightbak / 2)
             {
-                windowRect.y += height - heightbak;
+               Y += height - heightbak;
             }
             //MyLog.LogMessage("SetResolution3", widthbak, heightbak, Screen.fullScreen);
             //MyLog.LogMessage("SetResolution4", Screen.width, Screen.height, Screen.fullScreen);
@@ -261,6 +302,17 @@ namespace COM3D2.LillyUtill
             widthbak = width;
             heightbak = height;
             //MyLog.LogMessage("SetResolution");
+        }
+
+        // 우측 정렬
+        public static void GUISort()
+        {
+            int i = 0;
+            foreach (var item in myWindowRects)
+            {
+                item.X = Screen.width - item.Width;
+                item.Y = 20 * i++;
+            }
         }
     }
 
