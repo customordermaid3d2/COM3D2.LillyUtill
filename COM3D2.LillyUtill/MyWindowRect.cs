@@ -25,14 +25,13 @@ namespace COM3D2.LillyUtill
 
         private static readonly List<MyWindowRect> myWindowRects = new List<MyWindowRect>();
 
-        /// <summary>
-        /// isOpenAction
-        /// </summary>
         private ConfigEntry<bool> isOpen;
-        /// <summary>
-        /// isOpen
-        /// </summary>
-        //private event Action<bool> isOpenAction;
+
+        private static ConfigEntry<int> vGUISortX;
+        private static ConfigEntry<int> vGUISortY;
+        private static ConfigEntry<int> vGUISortDW;
+        private static ConfigEntry<int> vGUISortDH;
+
 
 
         public bool IsOpen
@@ -59,27 +58,29 @@ namespace COM3D2.LillyUtill
             }
         }
 
+
+
         public string windowName;
         public string FullName;
         public string ShortName;
 
-       //private void GUIChg(bool value)
-       //{
-       //    if (value)
-       //    {
-       //        windowRect.width = windowRectOpen.w;
-       //        windowRect.height = windowRectOpen.h;
-       //        windowRect.x -= windowRectOpen.w - windowRectClose.w;
-       //        windowName = FullName;
-       //    }
-       //    else
-       //    {
-       //        windowRect.width = windowRectClose.w;
-       //        windowRect.height = windowRectClose.h;
-       //        windowRect.x += windowRectOpen.w - windowRectClose.w;
-       //        windowName = ShortName;
-       //    }
-       //}
+        //private void GUIChg(bool value)
+        //{
+        //    if (value)
+        //    {
+        //        windowRect.width = windowRectOpen.w;
+        //        windowRect.height = windowRectOpen.h;
+        //        windowRect.x -= windowRectOpen.w - windowRectClose.w;
+        //        windowName = FullName;
+        //    }
+        //    else
+        //    {
+        //        windowRect.width = windowRectClose.w;
+        //        windowRect.height = windowRectClose.h;
+        //        windowRect.x += windowRectOpen.w - windowRectClose.w;
+        //        windowName = ShortName;
+        //    }
+        //}
 
         private static event Action<int, int> actionScreen;
 
@@ -131,7 +132,8 @@ namespace COM3D2.LillyUtill
 
         public float Width { get => windowRect.width; set => windowRect.width = value; }
 
-        public float X { 
+        public float X
+        {
             get => windowRect.x;
             set
             {
@@ -140,9 +142,11 @@ namespace COM3D2.LillyUtill
             }
         }
 
-        public float Y { 
+        public float Y
+        {
             get => windowRect.y;
-            set { 
+            set
+            {
                 windowRect.y = value;
                 windowRect.y = Mathf.Clamp(windowRect.y, -windowRect.height + windowSpace, Screen.height - windowSpace);
             }
@@ -165,6 +169,23 @@ namespace COM3D2.LillyUtill
         public int winNum;
         public static int winCnt;
 
+        internal static void Awake(ConfigFile config)
+        {
+            if (vGUISortX == null) vGUISortX = config.Bind("GUI", "vGUISortX", 0);
+            if (vGUISortY == null) vGUISortY = config.Bind("GUI", "vGUISortY", 0);
+            if (vGUISortDW == null) vGUISortDW = config.Bind("GUI", "vGUISortDW", 20);
+            if (vGUISortDH == null) vGUISortDH = config.Bind("GUI", "vGUISortDH", 40);
+            if (harmony == null)
+            {
+                harmony = Harmony.CreateAndPatchAll(typeof(MyWindowRect));
+            }
+        }
+
+        internal static void Start()
+        {
+            widthbak = Screen.width;
+            heightbak = Screen.height;
+        }
 
         /// <summary>
         /// 이런식으로 일부 인수 변경 가능. 
@@ -191,6 +212,7 @@ namespace COM3D2.LillyUtill
         {
             cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
             myWindowRects.Add(this);
+
         }
 
         /// <summary>
@@ -228,14 +250,11 @@ namespace COM3D2.LillyUtill
             isOpen = config.Bind("GUI", "isOpen", true);
             //isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;
+
+
             //GUIChg(IsOpen);
 
-            if (harmony == null)
-            {
-                harmony = Harmony.CreateAndPatchAll(typeof(MyWindowRect));
-                widthbak = Screen.width;
-                heightbak = Screen.height;
-            }
+ 
             actionSave += save;
             actionScreen += ScreenChg;
 
@@ -281,7 +300,7 @@ namespace COM3D2.LillyUtill
         [HarmonyPostfix]
         public static void LoadScene(string f_strSceneName)
         {
-            if(f_strSceneName!="SceneADV")
+            if (f_strSceneName != "SceneADV")
                 actionSave();
         }
 
@@ -295,11 +314,11 @@ namespace COM3D2.LillyUtill
         {
             if (X > widthbak / 2)
             {
-                X= width - widthbak;
+                X = width - widthbak;
             }
             if (Y > heightbak / 2)
             {
-               Y += height - heightbak;
+                Y += height - heightbak;
             }
             //MyLog.LogMessage("SetResolution3", widthbak, heightbak, Screen.fullScreen);
             //MyLog.LogMessage("SetResolution4", Screen.width, Screen.height, Screen.fullScreen);
@@ -319,11 +338,14 @@ namespace COM3D2.LillyUtill
         // 우측 정렬
         public static void GUISort()
         {
-            int i = 0;
+            int i = 0, x = vGUISortX.Value, y = vGUISortY.Value, w = vGUISortDW.Value, h = vGUISortDH.Value;
             foreach (var item in myWindowRects)
             {
-                item.X = Screen.width - item.Width;
-                item.Y = 20 * i++;
+                if (item.IsOpen)
+                {
+                    item.X = Screen.width - x - item.Width - w * i;
+                    item.Y = y + h * i++;
+                }
             }
         }
     }

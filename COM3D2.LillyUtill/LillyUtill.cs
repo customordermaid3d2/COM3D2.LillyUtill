@@ -51,6 +51,7 @@ namespace COM3D2.LillyUtill
             myLog.LogMessage("Awake");
             maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             //maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch2));
+            MyWindowRect.Awake(config);
             PresetUtill.init();
             MaidActivePatch.init();
             //MaidActivePatch2.Awake();
@@ -66,6 +67,7 @@ namespace COM3D2.LillyUtill
 
         public void Start()
         {
+            MyWindowRect.Start();
             myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU", ho: 300);
             IsGUIOn = config.Bind("GUI", "isGUIOn", false);
 
