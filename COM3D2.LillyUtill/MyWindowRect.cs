@@ -26,13 +26,18 @@ namespace COM3D2.LillyUtill
         private static readonly List<MyWindowRect> myWindowRects = new List<MyWindowRect>();
 
         private ConfigEntry<bool> isOpen;
+        private ConfigEntry<bool> isGUIOn;
 
         private static ConfigEntry<int> vGUISortX;
         private static ConfigEntry<int> vGUISortY;
         private static ConfigEntry<int> vGUISortDW;
         private static ConfigEntry<int> vGUISortDH;
 
-
+        public bool IsGUIOn
+        {
+            get => isGUIOn.Value;
+            set => isGUIOn.Value = value;
+        }
 
         public bool IsOpen
         {
@@ -45,14 +50,14 @@ namespace COM3D2.LillyUtill
                 {
                     windowRect.width = windowRectOpen.w;
                     windowRect.height = windowRectOpen.h;
-                    X -= windowRectOpen.w - windowRectClose.w;
+                    windowRect.x -= windowRectOpen.w - windowRectClose.w;
                     windowName = FullName;
                 }
                 else
                 {
                     windowRect.width = windowRectClose.w;
                     windowRect.height = windowRectClose.h;
-                    Y += windowRectOpen.w - windowRectClose.w;
+                    windowRect.x += windowRectOpen.w - windowRectClose.w;
                     windowName = ShortName;
                 }
             }
@@ -211,8 +216,6 @@ namespace COM3D2.LillyUtill
                             float windowSpace = 32f)
         {
             cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
-            myWindowRects.Add(this);
-
         }
 
         /// <summary>
@@ -234,8 +237,7 @@ namespace COM3D2.LillyUtill
             windowName = windowFullName;
             FullName = windowFullName;
             ShortName = windowShortName;
-            cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);
-            myWindowRects.Add(this);
+            cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);            
         }
 
         private void cret(ConfigFile config, string fileName, float wc, float wo, float hc, float ho, float x, float y, float windowSpace)
@@ -248,18 +250,18 @@ namespace COM3D2.LillyUtill
             windowRectClose = new Size(wc, hc);
             LillyUtill.myLog.LogInfo("MyWindowRect.cret", fileName);
             isOpen = config.Bind("GUI", "isOpen", true);
+            isGUIOn = config.Bind("GUI", "isGUIOn", false);
             //isOpen.SettingChanged += isOpenSettingChanged;
             IsOpen = isOpen.Value;
 
-
             //GUIChg(IsOpen);
-
- 
             actionSave += save;
             actionScreen += ScreenChg;
 
             winNum = winCnt++;
             load();
+
+            myWindowRects.Add(this);
         }
 
         //private void isOpenSettingChanged(object sender, EventArgs e)
@@ -309,7 +311,11 @@ namespace COM3D2.LillyUtill
             actionSave();
         }
 
-
+        /// <summary>
+        /// 생각보다 의도대로 안됨. 특히 최대화시
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void ScreenChg(int width, int height)
         {
             if (X > widthbak / 2)

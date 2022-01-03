@@ -28,8 +28,9 @@ namespace COM3D2.LillyUtill
 
         public MyWindowRect myWindowRect;
         public int windowId = new System.Random().Next();
-        private ConfigEntry<bool> IsGUIOn;
+        //private ConfigEntry<bool> IsGUIOn;
         private Vector2 scrollPosition;
+
         public bool IsOpen
         {
             get => myWindowRect.IsOpen;
@@ -41,8 +42,7 @@ namespace COM3D2.LillyUtill
 
         public LillyUtill() : base()
         {
-            config = Config;
-            
+            config = Config;            
         }
 
         public void Awake()
@@ -69,14 +69,14 @@ namespace COM3D2.LillyUtill
         {
             MyWindowRect.Start();
             myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU", ho: 300);
-            IsGUIOn = config.Bind("GUI", "isGUIOn", false);
+            //IsGUIOn = config.Bind("GUI", "isGUIOn", false);
 
             // 이건 기어메뉴 아이콘
             SystemShortcutAPI.AddButton(
                 MyAttribute.PLAGIN_FULL_NAME
                 , new Action(delegate ()
                 { // 기어메뉴 아이콘 클릭시 작동할 기능
-                    IsGUIOn.Value = !IsGUIOn.Value;
+                    myWindowRect.IsGUIOn = !myWindowRect.IsGUIOn;
                 })
                 , MyAttribute.PLAGIN_NAME // 표시될 툴팁 내용                               
             , MyUtill.ExtractResource(Properties.Resources.icon));// 표시될 아이콘
@@ -84,7 +84,7 @@ namespace COM3D2.LillyUtill
 
         public void OnGUI()
         {
-            if (!IsGUIOn.Value)
+            if (!myWindowRect.IsGUIOn)
                 return;
 
             //GUI.skin.window = ;
@@ -105,7 +105,7 @@ namespace COM3D2.LillyUtill
             GUILayout.FlexibleSpace();
 
             if (GUILayout.Button("-", GUILayout.Width(20), GUILayout.Height(20))) { IsOpen = !IsOpen; }
-            if (GUILayout.Button("x", GUILayout.Width(20), GUILayout.Height(20))) { IsGUIOn.Value = false; }
+            if (GUILayout.Button("x", GUILayout.Width(20), GUILayout.Height(20))) { myWindowRect.IsGUIOn = false; }
             GUI.changed = false;
 
             GUILayout.EndHorizontal();// 가로 정렬 끝
