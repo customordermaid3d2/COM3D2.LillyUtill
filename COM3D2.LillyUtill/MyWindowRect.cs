@@ -179,9 +179,9 @@ namespace COM3D2.LillyUtill
         internal static void Awake(ConfigFile config)
         {
             if (vGUISortX == null) vGUISortX = config.Bind("GUI", "vGUISortX", 0);
-            if (vGUISortY == null) vGUISortY = config.Bind("GUI", "vGUISortY", 0);
-            if (vGUISortDW == null) vGUISortDW = config.Bind("GUI", "vGUISortDW", 20);
-            if (vGUISortDH == null) vGUISortDH = config.Bind("GUI", "vGUISortDH", 40);
+            if (vGUISortY == null) vGUISortY = config.Bind("GUI", "vGUISortY", 70);
+            if (vGUISortDW == null) vGUISortDW = config.Bind("GUI", "vGUISortDW", 0);
+            if (vGUISortDH == null) vGUISortDH = config.Bind("GUI", "vGUISortDH", 30);
             if (harmony == null)
             {
                 harmony = Harmony.CreateAndPatchAll(typeof(MyWindowRect));
@@ -320,11 +320,11 @@ namespace COM3D2.LillyUtill
         /// <param name="height"></param>
         public void ScreenChg(int width, int height)
         {
-            if (X > widthbak / 2)
+            if ((windowRect.x + windowRect.width) > widthbak / 2)
             {
                 X = width - widthbak;
             }
-            if (Y > heightbak / 2)
+            if ((windowRect.y + windowRect.height) > heightbak / 2)
             {
                 Y += height - heightbak;
             }
@@ -341,6 +341,7 @@ namespace COM3D2.LillyUtill
             widthbak = width;
             heightbak = height;
             //MyLog.LogMessage("SetResolution");
+            Debug.Log($"{width} , {height} , {fullscreen}");
         }
 
         /// <summary>
