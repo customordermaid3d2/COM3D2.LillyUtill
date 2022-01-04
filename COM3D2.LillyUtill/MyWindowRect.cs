@@ -322,7 +322,7 @@ namespace COM3D2.LillyUtill
         {
             if ((windowRect.x + windowRect.width) > widthbak / 2)
             {
-                X = width - widthbak;
+                X += width - widthbak;
             }
             if ((windowRect.y + windowRect.height) > heightbak / 2)
             {
