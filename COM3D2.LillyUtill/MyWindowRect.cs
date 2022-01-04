@@ -147,6 +147,8 @@ namespace COM3D2.LillyUtill
             }
         }
 
+
+
         public float Y
         {
             get => windowRect.y;
@@ -341,8 +343,10 @@ namespace COM3D2.LillyUtill
             //MyLog.LogMessage("SetResolution");
         }
 
-        // 우측 정렬
-        public static void GUISort()
+        /// <summary>
+        /// 우측 정렬
+        /// </summary>
+        public static void GUISortIsOpen()
         {
             int i = 0, x = vGUISortX.Value, y = vGUISortY.Value, w = vGUISortDW.Value, h = vGUISortDH.Value;
             foreach (var item in myWindowRects)
@@ -352,6 +356,51 @@ namespace COM3D2.LillyUtill
                     item.X = Screen.width - x - item.Width - w * i;
                     item.Y = y + h * i++;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 우측 정렬
+        /// </summary>
+        public static void GUISortIsGUIOn()
+        {
+            int i = 0, x = vGUISortX.Value, y = vGUISortY.Value, w = vGUISortDW.Value, h = vGUISortDH.Value;
+            foreach (var item in myWindowRects)
+            {
+                if (item.IsGUIOn)
+                {
+                    item.X = Screen.width - x - item.Width - w * i;
+                    item.Y = y + h * i++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 우측 정렬
+        /// </summary>
+        public static void GUISortAll()
+        {
+            int i = 0, x = vGUISortX.Value, y = vGUISortY.Value, w = vGUISortDW.Value, h = vGUISortDH.Value;
+            foreach (var item in myWindowRects)
+            {
+                item.X = Screen.width - x - item.Width - w * i;
+                item.Y = y + h * i++;
+            }
+        }
+
+        public static void GUIMinAll()
+        {
+            foreach (var item in myWindowRects)
+            {
+                item.IsOpen = false;
+            }
+        }
+
+        public static void GUICloseAll()
+        {
+            foreach (var item in myWindowRects)
+            {
+                item.IsGUIOn = false;
             }
         }
     }

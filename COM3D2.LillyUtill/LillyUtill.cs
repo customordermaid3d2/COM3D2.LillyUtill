@@ -68,7 +68,7 @@ namespace COM3D2.LillyUtill
         public void Start()
         {
             MyWindowRect.Start();
-            myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU", ho: 300);
+            myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU",wo:200, ho: 300);
             //IsGUIOn = config.Bind("GUI", "isGUIOn", false);
 
             // 이건 기어메뉴 아이콘
@@ -120,7 +120,11 @@ namespace COM3D2.LillyUtill
 
                 #region 여기에 내용 작성
 
-                if (GUILayout.Button(" MyWindowRect.GUISort", GUILayout.Height(20))) { MyWindowRect.GUISort(); }
+                if (GUILayout.Button("GUICloseAll", GUILayout.Height(20))) { MyWindowRect.GUICloseAll(); }
+                if (GUILayout.Button("GUIMinAll", GUILayout.Height(20))) { MyWindowRect.GUIMinAll(); }
+                if (GUILayout.Button("GUISortAll", GUILayout.Height(20))) { MyWindowRect.GUISortAll(); }
+                if (GUILayout.Button("GUISortOn", GUILayout.Height(20))) { MyWindowRect.GUISortIsGUIOn(); }
+                if (GUILayout.Button("GUISortOpen", GUILayout.Height(20))) { MyWindowRect.GUISortIsOpen(); }
 
                 #endregion
 
