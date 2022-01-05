@@ -44,21 +44,24 @@ namespace COM3D2.LillyUtill
             get => isOpen.Value;
             set
             {
-                isOpen.Value = value;
                 //isOpenAction?.Invoke(value);
-                if (value)
+                if (isOpen.Value != value)
                 {
-                    windowRect.width = windowRectOpen.w;
-                    windowRect.height = windowRectOpen.h;
-                    windowRect.x -= windowRectOpen.w - windowRectClose.w;
-                    windowName = FullName;
-                }
-                else
-                {
-                    windowRect.width = windowRectClose.w;
-                    windowRect.height = windowRectClose.h;
-                    windowRect.x += windowRectOpen.w - windowRectClose.w;
-                    windowName = ShortName;
+                    if (value)
+                    {
+                        windowRect.width = windowRectOpen.w;
+                        windowRect.height = windowRectOpen.h;
+                        windowRect.x -= windowRectOpen.w - windowRectClose.w;
+                        windowName = FullName;
+                    }
+                    else
+                    {
+                        windowRect.width = windowRectClose.w;
+                        windowRect.height = windowRectClose.h;
+                        windowRect.x += windowRectOpen.w - windowRectClose.w;
+                        windowName = ShortName;
+                    }
+                    isOpen.Value = value;
                 }
             }
         }
@@ -254,7 +257,7 @@ namespace COM3D2.LillyUtill
             isOpen = config.Bind("GUI", "isOpen", true);
             isGUIOn = config.Bind("GUI", "isGUIOn", false);
             //isOpen.SettingChanged += isOpenSettingChanged;
-            IsOpen = isOpen.Value;
+            IsOpen = !(IsOpen = !isOpen.Value);
 
             //GUIChg(IsOpen);
             actionSave += save;
