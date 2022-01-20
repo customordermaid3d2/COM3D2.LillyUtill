@@ -9,9 +9,9 @@ namespace COM3D2.LillyUtill
 {
     public class MaidActivePatch
     {
-        //[Obsolete("use public static Maid GetMaid(int select) or Maids2")]
+        [Obsolete("use public static Maid GetMaid(int select) or Maids2")]
         public static Maid[] maids = new Maid[3];
-        //[Obsolete("use public static string GetMaidName(int select)")]
+        [Obsolete("use public static string GetMaidName(int select)")]
         public static string[] maidNames = new string[3];
 
         private static Dictionary<int, Maid> maids2 = new Dictionary<int, Maid>();
@@ -72,7 +72,7 @@ namespace COM3D2.LillyUtill
         /// </summary>
         public static event Action<int> maidCntChg = delegate { };
 
-        internal static void init()
+        internal static void Awake()
         {
             MaidActivePatch.maidCntChg(3);
         }
@@ -342,7 +342,7 @@ namespace COM3D2.LillyUtill
         /// <param name="seleted"></param>
         /// <param name="cul"></param>
         /// <param name="Width"></param>
-        /// <param name="changed"></param>
+        /// <param name="changed"></param> selectionGrid 액션을 호출할지 여부. 호출후 GUI.changed = false;로 됨.
         /// <returns></returns>
         public static int SelectionGrid(int seleted, int cul = 3, float Width = cWidth, bool changed = false)
         {
@@ -360,11 +360,11 @@ namespace COM3D2.LillyUtill
 
         /// <summary>
         /// no event action selectionGrid,selectionGrid2
-        /// </summary>
-        /// <param name="seleted"></param>
-        /// <param name="cul"></param>
-        /// <param name="Width"></param>
-        /// <param name="changed"></param>
+        /// </summary>ㅇ
+        /// <param name="seleted"></param> 메이드 슬롯번호
+        /// <param name="cul"></param> 가로 버튼 갯수
+        /// <param name="Width"></param> 가로 GUI 크기
+        /// <param name="changed"></param> 미사용
         /// <returns></returns>
         public static int SelectionGrid3(int seleted, int cul = 3, float Width = cWidth, bool changed = false )
         {

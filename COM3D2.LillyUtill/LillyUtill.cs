@@ -13,7 +13,7 @@ namespace COM3D2.LillyUtill
     class MyAttribute
     {
         public const string PLAGIN_NAME = "LillyUtill";
-        public const string PLAGIN_VERSION = "22.1.4.1";
+        public const string PLAGIN_VERSION = "22.1.20.15";
         public const string PLAGIN_FULL_NAME = "COM3D2.LillyUtill.Plugin";
     }
 
@@ -42,35 +42,27 @@ namespace COM3D2.LillyUtill
 
         public LillyUtill() : base()
         {
-            config = Config;            
+            config = Config;
+            ConfigEntryUtill.init(Config);
+            ConfigEntryUtill<int>.init(Config);
+            PresetUtill.init();
         }
 
         public void Awake()
         {
             myLog = new MyLog(Logger, Config);
-            myLog.LogMessage("Awake");
+            myLog.LogMessage("Awake https://github.com/customordermaid3d2/COM3D2.LillyUtill");
             maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             //maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch2));
-            MyWindowRect.Awake(config);
-            PresetUtill.init();
-            MaidActivePatch.init();
+            MyWindowRect.Awake(config);            
+            MaidActivePatch.Awake();
+
             //MaidActivePatch2.Awake();
             //MaidActivePatch.maidCntChg(3);
 
-        }
-
-        public void OnDisable()
-        {
-            myLog.LogMessage("OnDisable");
-            MyWindowRect.ActionSave();
-        }
-
-        public void Start()
-        {
-            MyWindowRect.Start();
-            myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU",wo:200, ho: 300);
-            //IsGUIOn = config.Bind("GUI", "isGUIOn", false);
-
+            MyWindowRect.init();
+            myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU", wo: 200, ho: 300);
+            
             // 이건 기어메뉴 아이콘
             SystemShortcutAPI.AddButton(
                 MyAttribute.PLAGIN_FULL_NAME
@@ -81,6 +73,17 @@ namespace COM3D2.LillyUtill
                 , MyAttribute.PLAGIN_NAME // 표시될 툴팁 내용                               
             , MyUtill.ExtractResource(Properties.Resources.icon));// 표시될 아이콘
         }
+
+        public void OnDisable()
+        {
+            myLog.LogMessage("OnDisable");
+            MyWindowRect.ActionSave();
+        }
+
+       //public void Start()
+       //{                        
+       //    //IsGUIOn = config.Bind("GUI", "isGUIOn", false);
+       //}
 
         public void OnGUI()
         {

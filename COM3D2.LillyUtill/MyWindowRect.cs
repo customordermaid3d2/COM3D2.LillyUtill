@@ -191,7 +191,7 @@ namespace COM3D2.LillyUtill
             }
         }
 
-        internal static void Start()
+        internal static void init()
         {
             widthbak = Screen.width;
             heightbak = Screen.height;
