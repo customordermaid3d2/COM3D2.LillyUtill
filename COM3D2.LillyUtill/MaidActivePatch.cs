@@ -9,9 +9,9 @@ namespace COM3D2.LillyUtill
 {
     public class MaidActivePatch
     {
-        [Obsolete("use public static Maid GetMaid(int select) or Maids2")]
+        //[Obsolete("use public static Maid GetMaid(int select) or Maids2")]
         public static Maid[] maids = new Maid[3];
-        [Obsolete("use public static string GetMaidName(int select)")]
+        //[Obsolete("use public static string GetMaidName(int select)")]
         public static string[] maidNames = new string[3];
 
         private static Dictionary<int, Maid> maids2 = new Dictionary<int, Maid>();
