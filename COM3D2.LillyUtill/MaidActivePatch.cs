@@ -31,7 +31,7 @@ namespace COM3D2.LillyUtill
 
         private static int max = 2;
         private static int maxb = 2;
-        private static int seleced = 0;
+        
 
         public static int Max { get => max; }
 
@@ -39,26 +39,35 @@ namespace COM3D2.LillyUtill
         const int c_max = 6;//41-9=32 25*.25
 
         /// <summary>
-        /// if (!f_bMan)
+        /// HarmonyPatch(typeof(CharacterMgr), "SetActive") HarmonyPostfix
         /// </summary>
         public static event Action setActive = delegate { };
         public static event Action<Maid> setActiveMaid = delegate { };
+        /// <summary>
+        /// HarmonyPatch(typeof(CharacterMgr), "SetActive") HarmonyPostfix
+        /// </summary>
         public static event Action<int> setActiveMaid2 = delegate { };
+        /// <summary>
+        /// HarmonyPatch(typeof(CharacterMgr), "SetActive") HarmonyPostfix
+        /// </summary>
         public static event Action<int, Maid> setActiveMaid3 = delegate { };
 
-        /// <summary>
-        /// Maid SelectMaid(int select)
-        /// MaidActivePatch.seleced
-        /// selecedMaid
-        /// </summary>
-        public static int Seleced { get => seleced; }
+
+        private static int selected = 0;
 
         /// <summary>
         /// Maid SelectMaid(int select)
         /// MaidActivePatch.seleced
-        /// selecedMaid
+        /// Action<int> selecedMaid
         /// </summary>
-        public static event Action<int> selecedMaid = delegate { };
+        public static int Selected { get => selected; }
+
+        /// <summary>
+        /// Maid SelectMaid(int select)
+        /// MaidActivePatch.seleced
+        /// Action<int> selecedMaid
+        /// </summary>
+        public static event Action<int> selectedMaid = delegate { };
 
         /// <summary>
         /// if (!f_bMan)
@@ -93,12 +102,12 @@ namespace COM3D2.LillyUtill
         {
             if (maids2.ContainsKey(select))
             {
-                MaidActivePatch.seleced = select;
-                selecedMaid(select);
+                MaidActivePatch.selected = select;
+                selectedMaid(select);
                 return maids2[select];
             }
-            MaidActivePatch.seleced = 0;
-            selecedMaid(0);
+            MaidActivePatch.selected = 0;
+            selectedMaid(0);
             return null;
         }        
 
@@ -351,7 +360,7 @@ namespace COM3D2.LillyUtill
             seleted = GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width));
             if (GUI.changed)
             {
-                MaidActivePatch.seleced = seleted;
+                MaidActivePatch.selected = seleted;
                 selectionGrid();
                 GUI.changed = false;
             }
@@ -368,7 +377,7 @@ namespace COM3D2.LillyUtill
         /// <returns></returns>
         public static int SelectionGrid3(int seleted, int cul = 3, float Width = cWidth, bool changed = false )
         {
-            MaidActivePatch.seleced = seleted;
+            MaidActivePatch.selected = seleted;
             return GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width)); 
         }
 
@@ -388,7 +397,7 @@ namespace COM3D2.LillyUtill
             seleted = GUILayout.SelectionGrid(seleted, maidNames, cul, GUILayout.Width(Width));
             if (GUI.changed)
             {
-                MaidActivePatch.seleced = seleted;
+                MaidActivePatch.selected = seleted;
                 selectionGrid();
                 selectionGrid2(seleted);
                 GUI.changed = false;
