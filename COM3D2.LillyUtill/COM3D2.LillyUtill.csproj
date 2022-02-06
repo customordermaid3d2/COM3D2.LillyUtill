@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>COM3D2.LillyUtill</RootNamespace>
     <AssemblyName>COM3D2.LillyUtill</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -41,7 +41,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HarmonyX.2.5.5\lib\net45\0Harmony.dll</HintPath>
+      <HintPath>..\packages\HarmonyX.2.5.5\lib\net35\0Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>H:\COM3D2\COM3D2x64_Data\Managed\Assembly-CSharp.dll</HintPath>
@@ -53,28 +54,35 @@
     </Reference>
     <Reference Include="BepInEx, Version=5.4.17.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BepInEx.BaseLib.5.4.17\lib\net35\BepInEx.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="COM3D2.API">
       <HintPath>H:\COM3D2\BepinEx\plugins\COM3D2.API.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.dll</HintPath>
+    <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour, Version=21.8.19.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoMod.RuntimeDetour.21.8.19.1\lib\net40\MonoMod.RuntimeDetour.dll</HintPath>
+      <HintPath>..\packages\MonoMod.RuntimeDetour.21.8.19.1\lib\net35\MonoMod.RuntimeDetour.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoMod.Utils, Version=21.8.19.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoMod.Utils.21.8.19.1\lib\net40\MonoMod.Utils.dll</HintPath>
+      <HintPath>..\packages\MonoMod.Utils.21.8.19.1\lib\net35\MonoMod.Utils.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
@@ -90,6 +98,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnityEngine.5.6.1\lib\net35\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +139,9 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)*.dll" "C:\Downloads\plugin"
 copy "$(TargetDir)*.xml" "C:\Downloads\plugin"
-copy "$(TargetDir)*.dll" "F:\COM3D2\BepInEx\plugins"
-copy "$(TargetDir)*.xml" "F:\COM3D2\BepInEx\plugins"
-copy "$(TargetDir)*.dll" "F:\COM3D2-test\BepInEx\plugins"</PostBuildEvent>
+copy "$(TargetDir)*.dll" "h:\COM3D2\BepInEx\plugins"
+copy "$(TargetDir)*.xml" "h:\COM3D2\BepInEx\plugins"
+copy "$(TargetDir)*.dll" "h:\COM3D2-test\BepInEx\plugins"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\BepInEx.Core.5.4.17\build\BepInEx.Core.targets" Condition="Exists('..\packages\BepInEx.Core.5.4.17\build\BepInEx.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
