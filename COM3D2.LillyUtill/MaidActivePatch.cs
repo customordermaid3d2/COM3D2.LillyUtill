@@ -12,6 +12,9 @@ namespace COM3D2.LillyUtill
         //[Obsolete("use public static Maid GetMaid(int select) or Maids2")]
         public static Maid[] maids = new Maid[3];
         //[Obsolete("use public static string GetMaidName(int select)")]
+        /// <summary>
+        /// seleted = MaidActivePatch.SelectionGrid (seleted,3,265,false) ;
+        /// </summary>
         public static string[] maidNames = new string[3];
 
         private static Dictionary<int, Maid> maids2 = new Dictionary<int, Maid>();
@@ -75,6 +78,8 @@ namespace COM3D2.LillyUtill
        
         public static event Action deactivate = delegate { };
         public static event Action<int> deactivateMaid = delegate { };
+        public static event Action<Maid> deactivateMaid2 = delegate { };
+        public static event Action<int, Maid> deactivateMaid3 = delegate { };
 
         /// <summary>
         /// Awake, SetActive, Deactivate run
@@ -317,6 +322,27 @@ namespace COM3D2.LillyUtill
                 }
                 try
                 {
+                    if (maids2.ContainsKey(f_nActiveSlotNo))
+                    {
+                        deactivateMaid2(maids2[f_nActiveSlotNo]);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.deactivateMaid2", e.ToString());
+                }
+                try
+                {
+                    if (maids2.ContainsKey(f_nActiveSlotNo))
+                        deactivateMaid3(f_nActiveSlotNo, maids2[f_nActiveSlotNo]);
+                }
+                catch (Exception e)
+                {
+                    LillyUtill.myLog.LogFatal("CharacterMgr.deactivateMaid3", e.ToString());
+                }
+                // 이건 무조건 나중에
+                try
+                {
                     SetMaid(f_nActiveSlotNo, null);
                 }
                 catch (Exception e)
@@ -347,6 +373,7 @@ namespace COM3D2.LillyUtill
 
         /// <summary>
         /// event Action selectionGrid run
+        /// GUI.changed = false;
         /// </summary>
         /// <param name="seleted"></param>
         /// <param name="cul"></param>

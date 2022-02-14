@@ -104,6 +104,18 @@ namespace COM3D2.LillyUtill
             return instance;
         }
 
+        /// <summary>
+        /// 이거 사용하기
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <param name="config"></param>
+        /// <param name="configFileName"></param>
+        /// <param name="FullName"></param>
+        /// <param name="ShortName"></param>
+        /// <param name="icon"></param>
+        /// <param name="keyboardShortcut"></param>
+        /// <returns></returns>
         public static T Install<T>(GameObject parent, ConfigFile config, string configFileName, string FullName, string ShortName, Bitmap icon, KeyboardShortcut keyboardShortcut) where T : MyGUI
         {
             var instance = parent.GetComponent<T>();
