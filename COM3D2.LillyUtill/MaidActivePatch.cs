@@ -314,7 +314,8 @@ namespace COM3D2.LillyUtill
                 }
                 try
                 {
-                    deactivateMaid(f_nActiveSlotNo);
+                    if (maids2.ContainsKey(f_nActiveSlotNo))
+                        deactivateMaid(f_nActiveSlotNo);
                 }
                 catch (Exception e)
                 {
