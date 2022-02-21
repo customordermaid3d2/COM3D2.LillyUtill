@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using COM3D2API;
 using HarmonyLib;
 using System;
@@ -13,7 +14,7 @@ namespace COM3D25.LillyUtill
     class MyAttribute
     {
         public const string PLAGIN_NAME = "LillyUtill";
-        public const string PLAGIN_VERSION = "22.2.22.05";
+        public const string PLAGIN_VERSION = "22.2.22";
         public const string PLAGIN_FULL_NAME = "COM3D25.LillyUtill.Plugin";
     }
 
@@ -22,7 +23,8 @@ namespace COM3D25.LillyUtill
     //[BepInProcess("COM3D2x64.exe")]
     public class LillyUtill : BaseUnityPlugin
     {
-        public static MyLog myLog;
+        //public static MyLog myLog;
+        public static ManualLogSource Log;
         public static Harmony maidActivePatch;
         public static ConfigFile config;
 
@@ -43,24 +45,26 @@ namespace COM3D25.LillyUtill
         public LillyUtill() : base()
         {
             config = Config;
+            Log = Logger;
             ConfigEntryUtill.init(Config);
             ConfigEntryUtill<int>.init(Config);
             PresetUtill.init();
+            MyWindowRect.init(config);
         }
 
         public void Awake()
         {
-            myLog = new MyLog(Logger, Config);
-            myLog.LogMessage("Awake https://github.com/customordermaid3d2/COM3D2.LillyUtill");
+            Log.LogMessage("Awake https://github.com/customordermaid3d2/COM3D2.LillyUtill");
             maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch));
             //maidActivePatch=Harmony.CreateAndPatchAll(typeof(MaidActivePatch2));
-            MyWindowRect.Awake(config);            
+
+            MyWindowRect.Awake();
             MaidActivePatch.Awake();
 
             //MaidActivePatch2.Awake();
             //MaidActivePatch.maidCntChg(3);
 
-            MyWindowRect.init();
+            MyWindowRect.ScreenInit();
             myWindowRect = new MyWindowRect(config, MyAttribute.PLAGIN_FULL_NAME, MyAttribute.PLAGIN_NAME, "LU", wo: 200, ho: 300);
             
             // 이건 기어메뉴 아이콘
@@ -76,7 +80,7 @@ namespace COM3D25.LillyUtill
 
         public void OnDisable()
         {
-            myLog.LogMessage("OnDisable");
+            Log.LogMessage("OnDisable");
             MyWindowRect.ActionSave();
         }
 

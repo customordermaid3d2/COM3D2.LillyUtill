@@ -31,18 +31,18 @@ namespace COM3D25.LillyUtill
 
             if (!f_bMan)// 남자가 아닐때
             {
-                LillyUtill.myLog.LogInfo("CharacterMgr.SetActive", f_maid.status.fullNameEnStyle);
+                //LillyUtill.Log.LogInfo("CharacterMgr.SetActive", f_maid.status.fullNameEnStyle);
 
                 try
                 {
                 }
                 catch (Exception e)
                 {
-                    LillyUtill.myLog.LogFatal("CharacterMgr.setActive", e.ToString());
+                    LillyUtill.Log.LogFatal($"CharacterMgr.setActive {e.ToString()}");
                 }
                 
             }
-            LillyUtill.myLog.LogInfo("CharacterMgr.SetActive", f_nActiveSlotNo, f_bMan, f_maid.status.fullNameEnStyle);
+            //LillyUtill.Log.LogInfo("CharacterMgr.SetActive", f_nActiveSlotNo, f_bMan, f_maid.status.fullNameEnStyle);
         }
 
         /// <summary>
@@ -56,17 +56,17 @@ namespace COM3D25.LillyUtill
         {
             if (!f_bMan)
             {
-                LillyUtill.myLog.LogInfo("CharacterMgr.Deactivate", f_nActiveSlotNo);
+                //LillyUtill.Log.LogInfo("CharacterMgr.Deactivate", f_nActiveSlotNo);
 
                 try
                 {
                 }
                 catch (Exception e)
                 {
-                    LillyUtill.myLog.LogFatal("CharacterMgr.SetMaid", e.ToString());
+                    LillyUtill.Log.LogFatal($"CharacterMgr.SetMaid {e.ToString()}");
                 }
             }
-            LillyUtill.myLog.LogInfo("CharacterMgr.Deactivate", f_nActiveSlotNo, f_bMan);
+            //LillyUtill.Log.LogInfo("CharacterMgr.Deactivate", f_nActiveSlotNo, f_bMan);
         }
 
     }

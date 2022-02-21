@@ -39,12 +39,12 @@ namespace COM3D25.LillyUtill
         {
             if (m_maid == null)
             {
-                LillyUtill.myLog.LogWarning("SetMaidPreset maid null");
+                LillyUtill.Log.LogWarning("SetMaidPreset maid null");
                 return;
             }
             if (m_maid.IsBusy)
             {
-                LillyUtill.myLog.LogWarning("RandPreset Maid Is Busy");
+                LillyUtill.Log.LogWarning("RandPreset Maid Is Busy");
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace COM3D25.LillyUtill
             if (preset == null)
             {
                 //  if (configEntryUtill["SetMaidPreset", false])
-                LillyUtill.myLog.LogDebug("SetMaidPreset preset null ");
+                LillyUtill.Log.LogDebug("SetMaidPreset preset null ");
                 return;
             }            
             GameMain.Instance.CharacterMgr.PresetSet(m_maid, preset);
@@ -79,12 +79,12 @@ namespace COM3D25.LillyUtill
         {
             if (m_maid == null)
             {
-                LillyUtill.myLog.LogWarning("SetMaidPreset maid null");
+                LillyUtill.Log.LogWarning("SetMaidPreset maid null");
                 return;
             }
             if (m_maid.IsBusy)
             {
-                LillyUtill.myLog.LogWarning("RandPreset Maid Is Busy");
+                LillyUtill.Log.LogWarning("RandPreset Maid Is Busy");
                 return;
             }
 
@@ -99,7 +99,7 @@ namespace COM3D25.LillyUtill
             if (preset == null)
             {
                 //  if (configEntryUtill["SetMaidPreset", false])
-                LillyUtill.myLog.LogDebug("SetMaidPreset preset null ");
+                LillyUtill.Log.LogDebug("SetMaidPreset preset null ");
                 return;
             }
             preset.ePreType = presetType;
