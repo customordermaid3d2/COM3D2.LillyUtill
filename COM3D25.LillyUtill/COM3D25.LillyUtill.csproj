@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>COM3D2.LillyUtill</RootNamespace>
-    <AssemblyName>COM3D2.LillyUtill</AssemblyName>
+    <AssemblyName>COM3D25.LillyUtill</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
