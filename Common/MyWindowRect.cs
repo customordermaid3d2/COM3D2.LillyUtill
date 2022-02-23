@@ -179,19 +179,26 @@ namespace COM3D2.LillyUtill
         public int winNum;
         public static int winCnt;
 
-        internal static void Awake(ConfigFile config)
+        internal static void init(ConfigFile config)
         {
+            //LillyUtill.myLog.LogMessage("MyWindowRect Awake");
             if (vGUISortX == null) vGUISortX = config.Bind("GUI", "vGUISortX", 0);
             if (vGUISortY == null) vGUISortY = config.Bind("GUI", "vGUISortY", 70);
             if (vGUISortDW == null) vGUISortDW = config.Bind("GUI", "vGUISortDW", 0);
             if (vGUISortDH == null) vGUISortDH = config.Bind("GUI", "vGUISortDH", 30);
+        }
+
+        internal static void Awake()
+        {
+            LillyUtill.Log.LogMessage("MyWindowRect Awake");
             if (harmony == null)
             {
                 harmony = Harmony.CreateAndPatchAll(typeof(MyWindowRect));
             }
         }
+        
 
-        internal static void init()
+        internal static void ScreenInit()
         {
             widthbak = Screen.width;
             heightbak = Screen.height;
@@ -237,7 +244,14 @@ namespace COM3D2.LillyUtill
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="windowSpace"></param>
-        public MyWindowRect(ConfigFile config, string fileName, string windowFullName, string windowShortName, float wc = 100f, float wo = 300f, float hc = 32f, float ho = 600f, float x = 32f, float y = 32f, float windowSpace = 32f)
+        public MyWindowRect(ConfigFile config
+            , string fileName
+            , string windowFullName
+            , string windowShortName
+            , float wc = 100f, float wo = 300f
+            , float hc = 32f, float ho = 600f
+            , float x = 32f, float y = 32f
+            , float windowSpace = 32f)
         {
             windowName = windowFullName;
             FullName = windowFullName;
@@ -245,28 +259,35 @@ namespace COM3D2.LillyUtill
             cret(config, fileName, wc, wo, hc, ho, x, y, windowSpace);            
         }
 
-        private void cret(ConfigFile config, string fileName, float wc, float wo, float hc, float ho, float x, float y, float windowSpace)
+        public void cret(ConfigFile config, string fileName, float wc, float wo, float hc, float ho, float x, float y, float windowSpace)
         {
-            jsonPath = Path.GetDirectoryName(config.ConfigFilePath) + $@"\{fileName}-rect.json";
+            try
+            {
+                jsonPath = Path.GetDirectoryName(config.ConfigFilePath) + $@"\{fileName}-rect.json";
 
-            this.windowSpace = windowSpace;
-            windowRect = new Rect(x, y, wo, ho);
-            windowRectOpen = new Size(wo, ho);
-            windowRectClose = new Size(wc, hc);
-            LillyUtill.myLog.LogInfo("MyWindowRect.cret", fileName);
-            isOpen = config.Bind("GUI", "isOpen", true);
-            isGUIOn = config.Bind("GUI", "isGUIOn", false);
-            //isOpen.SettingChanged += isOpenSettingChanged;
-            IsOpen = !(IsOpen = !isOpen.Value);
+                this.windowSpace = windowSpace;
+                windowRect = new Rect(x, y, wo, ho);
+                windowRectOpen = new Size(wo, ho);
+                windowRectClose = new Size(wc, hc);
+                //LillyUtill.myLog.LogInfo("MyWindowRect.cret", fileName);
+                isOpen = config.Bind("GUI", "isOpen", true);
+                isGUIOn = config.Bind("GUI", "isGUIOn", false);
+                //isOpen.SettingChanged += isOpenSettingChanged;
+                IsOpen = !(IsOpen = !isOpen.Value);
 
-            //GUIChg(IsOpen);
-            actionSave += save;
-            actionScreen += ScreenChg;
+                //GUIChg(IsOpen);
+                actionSave += save;
+                actionScreen += ScreenChg;
 
-            winNum = winCnt++;
-            load();
+                winNum = winCnt++;
+                load();
 
-            myWindowRects.Add(this);
+                myWindowRects.Add(this);
+            }
+            catch (Exception e)
+            {
+                LillyUtill.Log.LogError($"MyWindowRect.cret : {e}");
+            }
         }
 
         //private void isOpenSettingChanged(object sender, EventArgs e)

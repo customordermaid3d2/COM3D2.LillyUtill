@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace COM3D25.LillyUtill
+namespace COM3D2.LillyUtill
 {
 
     [Obsolete("미구현")]

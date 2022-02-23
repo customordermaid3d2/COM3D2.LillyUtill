@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace COM3D25.LillyUtill
+namespace COM3D2.LillyUtill
 {
     public class MaidActivePatch
     {

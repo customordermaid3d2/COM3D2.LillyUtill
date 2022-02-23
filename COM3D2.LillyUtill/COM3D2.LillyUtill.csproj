@@ -102,16 +102,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigEntryUtill.cs" />
-    <Compile Include="LillyUtill.cs" />
-    <Compile Include="MaidActivePatch.cs" />
-    <Compile Include="MaidActivePatch2.cs" />
-    <Compile Include="MyGUI.cs" />
-    <Compile Include="MyLog.cs" />
-    <Compile Include="MyUtill.cs" />
-    <Compile Include="MyWindowRect.cs" />
-    <Compile Include="PersonalUtill.cs" />
-    <Compile Include="PresetUtill.cs" />
+    <Compile Include="..\Common\ConfigEntryUtill.cs">
+      <Link>ConfigEntryUtill.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\LillyUtill.cs">
+      <Link>LillyUtill.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MaidActivePatch.cs">
+      <Link>MaidActivePatch.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MaidActivePatch2.cs">
+      <Link>MaidActivePatch2.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MyGUI.cs">
+      <Link>MyGUI.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MyLog.cs">
+      <Link>MyLog.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MyUtill.cs">
+      <Link>MyUtill.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MyWindowRect.cs">
+      <Link>MyWindowRect.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\PersonalUtill.cs">
+      <Link>PersonalUtill.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\PresetUtill.cs">
+      <Link>PresetUtill.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

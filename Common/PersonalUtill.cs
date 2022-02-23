@@ -39,19 +39,19 @@ namespace COM3D2.LillyUtill
             {
                 if (personalDataAll == null)
                 {
-                    LillyUtill.myLog.LogInfo("CreateData.personalDataAll");
+                    LillyUtill.Log.LogInfo("CreateData.personalDataAll");
                     personalDataAll = Personal.GetAllDatas(false);
                 }
             }
             catch (Exception e)
             {
-                LillyUtill.myLog.LogError("CreateData.personalDataAll", e.ToString());
+                LillyUtill.Log.LogError($"CreateData.personalDataAll {e.ToString()}");
             }
             try
             {
                 if (personalDataEnable == null)
                 {
-                    LillyUtill.myLog.LogInfo("CreateData.personalDataEnable");
+                    LillyUtill.Log.LogInfo("CreateData.personalDataEnable");
                     personalDataEnable = Personal.GetAllDatas(true);
 
                     //bool flag = true;
@@ -59,7 +59,7 @@ namespace COM3D2.LillyUtill
                     List<Personal.Data> list = new List<Personal.Data>();
                     foreach (var data in personalDataEnable)
                     {
-                        LillyUtill.myLog.LogInfo(data.uniqueName);
+                        LillyUtill.Log.LogInfo(data.uniqueName);
                         if (data.oldPersonal)
                         {
                             string a = data.uniqueName.ToLower();
@@ -103,7 +103,7 @@ namespace COM3D2.LillyUtill
             }
             catch (Exception e)
             {
-                LillyUtill.myLog.LogError("CreateData.personalDataEnable", e.ToString());
+                LillyUtill.Log.LogError($"CreateData.personalDataEnable {e.ToString()}");
             }
 
         }
@@ -152,7 +152,7 @@ namespace COM3D2.LillyUtill
         {
             if (maid == null)
             {
-                LillyUtill.myLog.LogFatal("maid null");
+                LillyUtill.Log.LogFatal("maid null");
             }
 
 
