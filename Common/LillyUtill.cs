@@ -26,7 +26,7 @@ namespace COM3D2.LillyUtill
         //public static MyLog myLog;
         public static ManualLogSource Log;
         public static Harmony maidActivePatch;
-        public static ConfigFile config;
+        public static ConfigFile config;        
 
         public MyWindowRect myWindowRect;
         public int windowId = new System.Random().Next();
@@ -46,8 +46,8 @@ namespace COM3D2.LillyUtill
         {
             config = Config;
             Log = Logger;
-            ConfigEntryUtill.init(Config);
-            ConfigEntryUtill<int>.init(Config);
+            //ConfigEntryUtill.init(Config);
+            //ConfigEntryUtill<int>.init(Config);
             PresetUtill.init();
             MyWindowRect.init(config);
         }

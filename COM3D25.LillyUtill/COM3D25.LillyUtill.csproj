@@ -51,17 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Common\ConfigEntryUtill.cs">
-      <Link>ConfigEntryUtill.cs</Link>
+    <Compile Include="..\Common\ConfigEntryUtill2.cs">
+      <Link>ConfigEntryUtill2.cs</Link>
     </Compile>
     <Compile Include="..\Common\LillyUtill.cs">
       <Link>LillyUtill.cs</Link>
     </Compile>
     <Compile Include="..\Common\MaidActivePatch.cs">
       <Link>MaidActivePatch.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\MaidActivePatch2.cs">
-      <Link>MaidActivePatch2.cs</Link>
     </Compile>
     <Compile Include="..\Common\MyGUI.cs">
       <Link>MyGUI.cs</Link>
